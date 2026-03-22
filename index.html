@@ -1,0 +1,1743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WOLF LABS | What Do You Do Every Day?</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#121212; --surf:#181818; --card:#1e1e1e; --elev:#252525; --hover:#2c2c2c;
+  --green:#1DB954; --glo:rgba(29,185,84,0.14); --gmd:rgba(29,185,84,0.24); --ghi:rgba(29,185,84,0.40);
+  --wh:#FFFFFF; --lt:#E8E8E8; --gr:#B3B3B3; --dim:rgba(255,255,255,0.05); --bdr:rgba(255,255,255,0.07);
+  --red:#E91429; --rlo:rgba(233,20,41,0.10); --ylo:#FACC15; --ylo-lo:rgba(250,204,21,0.10);
+  --nav:58px; --sb:380px; --wb:300px; --r:14px; --rs:9px;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--wh);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");}
+
+/* ═══ TOP NAV ═══════════════════════════════════════════ */
+.nav{position:fixed;top:0;left:0;right:0;height:var(--nav);background:rgba(18,18,18,.96);backdrop-filter:blur(30px);border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;padding:0 18px;z-index:600;}
+.nav-brand{display:flex;align-items:center;gap:9px;}
+.nav-disc{width:28px;height:28px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Nunito',sans-serif;font-weight:900;font-size:12px;color:#000;flex-shrink:0;}
+.nav-name{font-family:'Nunito',sans-serif;font-weight:800;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--wh);}
+.nav-mid{display:flex;align-items:center;gap:10px;}
+.nav-step{font-family:'Nunito',sans-serif;font-size:10px;font-weight:700;color:var(--gr);min-width:40px;text-align:center;}
+.prog-rail{width:130px;height:3px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;}
+.prog-fill{height:100%;background:var(--green);border-radius:2px;width:0%;transition:width .5s ease;}
+.nav-acts{display:flex;gap:7px;}
+.na{width:28px;height:28px;border-radius:50%;border:1px solid var(--bdr);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--gr);transition:all .2s;}
+.na:hover{border-color:rgba(255,255,255,.22);color:var(--wh);background:var(--dim);}
+.na.active-btn{border-color:var(--green);color:var(--green);background:var(--glo);}
+
+/* ═══ JUMP TO PAGE PANEL ════════════════════════════════ */
+.jump-panel{
+  position:fixed;top:var(--nav);right:0;width:280px;
+  background:#191919;border-left:1px solid var(--bdr);border-bottom:1px solid var(--bdr);
+  border-radius:0 0 0 var(--r);z-index:595;
+  transform:translateY(-110%);transition:transform .32s cubic-bezier(.4,0,.2,1);
+  overflow:hidden;box-shadow:-8px 8px 32px rgba(0,0,0,.55);
+}
+.jump-panel.open{transform:translateY(0);}
+.jump-hd{padding:12px 16px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;}
+.jump-hd-title{font-family:'Nunito',sans-serif;font-size:9px;font-weight:800;letter-spacing:.2em;color:var(--green);text-transform:uppercase;}
+.jump-search{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--bdr);border-radius:var(--rs);color:var(--wh);font-family:'DM Sans',sans-serif;font-size:13px;padding:8px 12px;outline:none;margin:10px 16px 0;width:calc(100% - 32px);display:block;transition:border-color .2s;}
+.jump-search:focus{border-color:var(--gmd);}
+.jump-search::placeholder{color:rgba(255,255,255,.2);}
+.jump-list{max-height:calc(100vh - var(--nav) - 100px);overflow-y:auto;padding:8px 0 12px;}
+.jump-list::-webkit-scrollbar{width:3px;}
+.jump-list::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:2px;}
+.jump-item{display:flex;align-items:center;gap:10px;padding:8px 16px;cursor:pointer;transition:background .15s;}
+.jump-item:hover{background:rgba(255,255,255,.05);}
+.jump-item.active-pg{background:var(--glo);}
+.jump-item.active-pg .jump-num{background:var(--green);color:#000;border-color:var(--green);}
+.jump-num{width:22px;height:22px;border-radius:5px;background:rgba(255,255,255,.05);border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-family:'Nunito',sans-serif;font-size:9px;font-weight:800;color:var(--gr);flex-shrink:0;transition:all .15s;}
+.jump-name{font-size:12.5px;color:var(--lt);line-height:1.3;}
+.jump-tag{font-size:9px;color:var(--gr);font-family:'Nunito',sans-serif;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-top:1px;}
+.jump-section-sep{padding:6px 16px 3px;font-family:'Nunito',sans-serif;font-size:8px;font-weight:800;letter-spacing:.18em;color:rgba(255,255,255,.18);text-transform:uppercase;}
+
+/* ═══ VOCAB SIDEBAR (RIGHT) ════════════════════════════ */
+.veil{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:700;opacity:0;pointer-events:none;transition:opacity .3s;}
+.veil.on{opacity:1;pointer-events:all;}
+.vsb{position:fixed;top:0;right:0;width:var(--sb);height:100%;background:#1a1a1a;border-left:1px solid var(--bdr);z-index:710;overflow-y:auto;transform:translateX(100%);transition:transform .38s cubic-bezier(.4,0,.2,1);}
+.vsb.open{transform:translateX(0);}
+@media(max-width:500px){.vsb{width:100%;}}
+.vsb-top{display:flex;align-items:center;justify-content:space-between;padding:18px 20px 0;position:sticky;top:0;background:#1a1a1a;z-index:1;padding-bottom:14px;border-bottom:1px solid var(--bdr);}
+.vsb-label{font-family:'Nunito',sans-serif;font-size:9px;font-weight:800;letter-spacing:.2em;color:var(--green);text-transform:uppercase;}
+.vsb-close{width:30px;height:30px;border-radius:50%;border:1px solid var(--bdr);background:var(--card);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--gr);transition:all .2s;}
+.vsb-close:hover{background:var(--hover);color:var(--wh);}
+.vsb-body{padding:22px 22px 40px;}
+.vsb-emoji{font-size:52px;margin-bottom:14px;display:block;text-align:center;}
+.vsb-word{font-family:'Nunito',sans-serif;font-weight:900;font-size:32px;color:var(--green);text-align:center;margin-bottom:4px;line-height:1;}
+.vsb-pron{font-size:14px;color:var(--gr);text-align:center;margin-bottom:20px;font-style:italic;}
+.vsb-section{margin-bottom:18px;}
+.vsb-tag{display:inline-block;background:var(--glo);border:1px solid var(--gmd);border-radius:4px;padding:3px 10px;font-family:'Nunito',sans-serif;font-size:9px;font-weight:800;letter-spacing:.12em;color:var(--green);text-transform:uppercase;margin-bottom:8px;}
+.vsb-text{font-size:15px;line-height:1.75;color:var(--lt);}
+.vsb-ex{background:var(--card);border-left:3px solid var(--green);border-radius:0 var(--rs) var(--rs) 0;padding:13px 16px;font-size:14px;font-style:italic;color:var(--lt);margin-top:10px;line-height:1.7;}
+.vsb-speak{background:var(--glo);border:1px solid var(--gmd);border-radius:var(--rs);padding:16px;margin-top:18px;}
+.vsb-speak-hd{font-family:'Nunito',sans-serif;font-size:9px;font-weight:800;letter-spacing:.18em;color:var(--green);text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.vsb-speak-hd::before{content:'🎙';}
+.vsb-speak-q{font-size:15px;color:var(--lt);line-height:1.75;}
+.vsb-starter{background:rgba(255,255,255,.04);border:1px solid var(--bdr);border-radius:var(--rs);padding:11px 14px;margin-top:8px;font-size:14px;color:var(--lt);font-style:italic;}
+.vsb-starter strong{color:var(--green);font-style:normal;}
+
+/* ═══ WHITEBOARD SIDEBAR (LEFT) ════════════════════════ */
+.wb-panel{position:fixed;top:0;left:0;width:var(--wb);height:100%;background:#161616;border-right:1px solid var(--bdr);z-index:590;transform:translateX(-100%);transition:transform .38s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;}
+.wb-panel.open{transform:translateX(0);}
+.wb-hd{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--bdr);flex-shrink:0;}
+.wb-title{font-family:'Nunito',sans-serif;font-size:9px;font-weight:800;letter-spacing:.2em;color:var(--green);text-transform:uppercase;display:flex;align-items:center;gap:7px;}
+.wb-close{width:24px;height:24px;border-radius:50%;border:1px solid var(--bdr);background:var(--card);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--gr);transition:all .2s;}
+.wb-close:hover{background:var(--hover);color:var(--wh);}
+.wb-tools{display:flex;gap:6px;padding:10px 14px;border-bottom:1px solid var(--bdr);flex-wrap:wrap;flex-shrink:0;}
+.wb-tool{background:var(--card);border:1px solid var(--bdr);border-radius:6px;padding:5px 10px;font-family:'Nunito',sans-serif;font-size:10px;font-weight:700;color:var(--gr);cursor:pointer;transition:all .18s;}
+.wb-tool:hover{color:var(--wh);border-color:rgba(255,255,255,.18);}
+.wb-tool.active{background:var(--glo);border-color:var(--gmd);color:var(--green);}
+.wb-area{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.wb-textarea{flex:1;background:transparent;border:none;outline:none;color:var(--wh);font-family:'DM Sans',sans-serif;font-size:14px;padding:14px 16px;resize:none;line-height:1.7;}
+.wb-textarea::placeholder{color:rgba(255,255,255,.18);}
+.wb-bottom{padding:10px 14px;border-top:1px solid var(--bdr);display:flex;gap:7px;flex-shrink:0;}
+.wb-action{flex:1;background:var(--card);border:1px solid var(--bdr);border-radius:7px;padding:8px;font-family:'Nunito',sans-serif;font-size:10px;font-weight:700;color:var(--gr);cursor:pointer;transition:all .18s;text-align:center;}
+.wb-action:hover{color:var(--wh);border-color:rgba(255,255,255,.18);}
+.wb-action.green-action{background:var(--glo);border-color:var(--gmd);color:var(--green);}
+.wb-saved{font-family:'Nunito',sans-serif;font-size:10px;color:var(--green);padding:4px 14px;display:none;}
+
+/* ═══ LAYOUT ════════════════════════════════════════════ */
+.lesson{padding-top:calc(var(--nav) + 14px);padding-bottom:110px;position:relative;z-index:1;min-height:100vh;}
+.screen{display:none;max-width:740px;margin:0 auto;padding:22px 18px;animation:upfade .4s ease both;}
+.screen.on{display:block;}
+@keyframes upfade{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+
+/* ═══ CHIP LABELS ═══════════════════════════════════════ */
+.clabel{display:inline-flex;align-items:center;gap:6px;background:var(--glo);border:1px solid var(--gmd);border-radius:20px;padding:4px 13px;font-family:'Nunito',sans-serif;font-size:10px;font-weight:800;letter-spacing:.12em;color:var(--green);text-transform:uppercase;margin-bottom:20px;}
+.cdot{width:5px;height:5px;background:var(--green);border-radius:50%;animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.15;}}
+
+/* ═══ TYPE ═══════════════════════════════════════════════ */
+h2{font-family:'Nunito',sans-serif;font-weight:900;font-size:24px;line-height:1.15;margin-bottom:8px;}
+h3{font-family:'Nunito',sans-serif;font-weight:700;font-size:15px;margin-bottom:9px;color:var(--lt);}
+h4{font-family:'Nunito',sans-serif;font-weight:700;font-size:12px;color:var(--gr);margin-bottom:7px;}
+p{font-size:14px;line-height:1.8;color:var(--lt);}
+.muted{color:var(--gr);font-size:13px;}
+.gc{color:var(--green);}
+.mt6{margin-top:6px;}.mt10{margin-top:10px;}.mt12{margin-top:12px;}.mt16{margin-top:16px;}.mt20{margin-top:20px;}
+
+/* ═══ CARDS ══════════════════════════════════════════════ */
+.card{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--r);padding:22px;margin-bottom:14px;}
+.cg{background:linear-gradient(135deg,rgba(29,185,84,.07),rgba(29,185,84,.01));border-color:rgba(29,185,84,.22);}
+.cd{background:#0d0d0d;border-color:var(--bdr);}
+
+/* ═══ BUTTONS ════════════════════════════════════════════ */
+.btn{display:inline-flex;align-items:center;gap:7px;padding:11px 24px;border-radius:30px;border:none;cursor:pointer;font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;transition:all .2s;white-space:nowrap;}
+.bgo{background:var(--green);color:#000;}.bgo:hover{background:#1ed760;transform:scale(1.04);}
+.bgh{background:transparent;border:1px solid rgba(255,255,255,.14);color:var(--wh);}.bgh:hover{border-color:rgba(255,255,255,.3);background:var(--dim);}
+.bck{background:var(--glo);border:1px solid var(--gmd);color:var(--green);}.bck:hover{background:rgba(29,185,84,.2);}
+.nav-row{display:flex;align-items:center;justify-content:space-between;margin-top:24px;gap:10px;}
+.nav-row-right{margin-left:auto;display:flex;gap:10px;}
+.nav-back{background:transparent;border:1px solid var(--bdr);color:var(--gr);font-size:11px;padding:9px 18px;border-radius:30px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:800;letter-spacing:.06em;text-transform:uppercase;transition:all .2s;display:inline-flex;align-items:center;gap:6px;}
+.nav-back:hover{border-color:rgba(255,255,255,.22);color:var(--wh);background:var(--dim);}
+/* ═══ SKIP BUTTON ═══════════════════════════════════════ */
+.skip-wrap{display:flex;justify-content:flex-end;margin-top:12px;}
+.skip-btn{background:transparent;border:none;color:rgba(255,255,255,.25);font-size:11px;font-family:'Nunito',sans-serif;font-weight:700;letter-spacing:.08em;cursor:pointer;padding:5px 2px;transition:color .2s;display:flex;align-items:center;gap:5px;text-transform:uppercase;}
+.skip-btn:hover{color:rgba(255,255,255,.55);}
+.skip-btn::after{content:'→';font-size:12px;}
+
+
+/* ═══ FEEDBACK ═══════════════════════════════════════════ */
+.fb{border-radius:var(--rs);padding:12px 16px;font-size:14px;line-height:1.65;display:none;margin-top:10px;}
+.fb.show{display:block;}
+.fb.ok{background:rgba(29,185,84,.08);border:1px solid rgba(29,185,84,.24);color:#22c55e;}
+.fb.bad{background:var(--rlo);border:1px solid rgba(233,20,41,.24);color:#f87171;}
+.fb.info{background:var(--dim);border:1px solid var(--bdr);color:rgba(255,255,255,.78);}
+
+/* ═══ SPEAK BOX ══════════════════════════════════════════ */
+.spk{background:var(--glo);border:1px solid var(--gmd);border-radius:var(--r);padding:18px 20px;margin-top:14px;}
+.spk-hd{font-family:'Nunito',sans-serif;font-size:9px;font-weight:800;letter-spacing:.2em;color:var(--green);text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:7px;}
+.spk-hd::before{content:'🎙';}
+.spk p{font-size:14px;color:var(--lt);}
+.starter{background:rgba(255,255,255,.04);border:1px solid var(--bdr);border-radius:var(--rs);padding:11px 15px;margin-top:9px;font-size:14px;color:var(--lt);font-style:italic;line-height:1.65;}
+.starter strong{color:var(--green);font-style:normal;}
+
+/* ═══ MCQ ════════════════════════════════════════════════ */
+.mcq{display:flex;flex-direction:column;gap:8px;margin-top:12px;}
+.mop{background:var(--elev);border:1px solid var(--bdr);border-radius:var(--rs);padding:13px 16px;cursor:pointer;font-size:14px;transition:all .18s;display:flex;align-items:center;gap:12px;color:var(--lt);user-select:none;}
+.mop:hover:not(.lk){border-color:rgba(255,255,255,.16);background:rgba(255,255,255,.07);}
+.mop.ok{border-color:var(--green);background:rgba(29,185,84,.08);color:#22c55e;}
+.mop.no{border-color:var(--red);background:var(--rlo);color:#f87171;}
+.mop.lk{pointer-events:none;}
+.oky{width:26px;height:26px;border-radius:6px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-family:'Nunito',sans-serif;font-size:10px;font-weight:800;flex-shrink:0;}
+
+/* ═══ FILL BLANK ══════════════════════════════════════════ */
+.blinput{background:transparent;border:none;border-bottom:2px solid var(--green);color:var(--green);font-size:16px;font-family:'DM Sans',sans-serif;width:130px;outline:none;text-align:center;padding:2px 6px;transition:all .2s;}
+.blinput.ok{border-bottom-color:#22c55e;color:#22c55e;}
+.blinput.no{border-bottom-color:var(--red);color:#f87171;}
+.blline{font-size:16px;line-height:2.6;color:var(--wh);margin-bottom:6px;}
+
+/* ═══ CLICKABLE VOCAB WORD ════════════════════════════════ */
+.vw{color:var(--green);border-bottom:1px dotted var(--green);cursor:pointer;font-weight:600;transition:all .15s;padding:1px 3px;border-radius:3px;}
+.vw:hover{background:var(--glo);border-bottom-style:solid;}
+
+/* ═══ GRAMMAR CLICK ═══════════════════════════════════════ */
+.gw{color:var(--ylo);border-bottom:1px dotted var(--ylo);cursor:pointer;font-weight:700;padding:1px 3px;border-radius:3px;transition:all .15s;}
+.gw:hover{background:var(--ylo-lo);border-bottom-style:solid;}
+.gtip{background:rgba(250,204,21,.06);border:1px solid rgba(250,204,21,.2);border-radius:var(--rs);padding:13px 16px;font-size:13.5px;color:var(--lt);display:none;margin-top:8px;line-height:1.7;}
+.gtip.show{display:block;}
+.gtip strong{color:var(--ylo);}
+
+/* ═══ TRANSCRIPT ══════════════════════════════════════════ */
+.trblk{background:#0b0b0b;border-left:3px solid var(--green);border-radius:0 var(--r) var(--r) 0;padding:18px 22px;font-size:15px;line-height:2.2;color:var(--lt);margin-bottom:10px;}
+.trtime{font-size:11px;color:var(--gr);font-style:italic;display:block;margin-bottom:6px;}
+
+/* ═══ TABLE ═══════════════════════════════════════════════ */
+.gtbl{width:100%;border-collapse:collapse;}
+.gtbl th{background:rgba(29,185,84,.07);border:1px solid var(--bdr);padding:10px 14px;font-family:'Nunito',sans-serif;font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--green);text-align:left;}
+.gtbl td{border:1px solid var(--bdr);padding:10px 14px;font-size:14px;color:var(--lt);}
+.gh{color:var(--green);font-weight:600;}
+
+/* ═══ DRAG & DROP ════════════════════════════════════════ */
+.ddbank{display:flex;flex-wrap:wrap;gap:9px;min-height:54px;padding:14px;background:rgba(255,255,255,.02);border:2px dashed rgba(255,255,255,.09);border-radius:var(--r);margin-bottom:16px;transition:border-color .2s;}
+.ddbank.dov{border-color:var(--green);}
+.chip{background:var(--elev);border:1px solid var(--bdr);border-radius:30px;padding:8px 17px;font-size:13px;font-weight:600;cursor:grab;user-select:none;transition:all .18s;color:var(--wh);display:inline-flex;align-items:center;gap:6px;}
+.chip:active{cursor:grabbing;transform:scale(.95);opacity:.65;}
+.chip.dragging{opacity:.25;}
+.chip.gone{display:none;}
+.ddslot{display:inline-flex;align-items:center;justify-content:center;min-width:150px;height:36px;background:rgba(255,255,255,.03);border:2px dashed rgba(255,255,255,.13);border-radius:30px;vertical-align:middle;transition:all .2s;padding:0 12px;font-size:13px;color:rgba(255,255,255,.22);font-weight:600;}
+.ddslot.dov{border-color:var(--green);background:var(--glo);color:var(--green);}
+.ddslot.ok{border-style:solid;border-color:var(--green);background:rgba(29,185,84,.08);color:#22c55e;}
+.ddslot.no{border-style:solid;border-color:var(--red);background:var(--rlo);color:#f87171;}
+.ddrow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:var(--elev);border:1px solid var(--bdr);border-radius:var(--rs);padding:11px 15px;font-size:14px;margin-bottom:9px;line-height:2.2;}
+
+/* ═══ MATCH ═══════════════════════════════════════════════ */
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;}
+.match-col h4{font-family:'Nunito',sans-serif;font-size:9px;font-weight:800;letter-spacing:.15em;color:var(--gr);text-transform:uppercase;margin-bottom:10px;text-align:center;}
+.mitem{background:var(--elev);border:1px solid var(--bdr);border-radius:var(--rs);padding:11px 14px;margin-bottom:8px;cursor:pointer;font-size:13.5px;transition:all .18s;text-align:center;user-select:none;}
+.mitem:hover{background:var(--hover);}
+.mitem.sel{border-color:var(--green);background:var(--glo);color:var(--green);}
+.mitem.mok{border-color:var(--green);background:rgba(29,185,84,.08);color:#22c55e;pointer-events:none;}
+.mitem.mno{border-color:var(--red);background:var(--rlo);color:#f87171;}
+
+/* ═══ ORDERING — DRAG TO REORDER ════════════════════════ */
+.ord-list{display:flex;flex-direction:column;gap:8px;}
+.ord-item{background:var(--elev);border:1px solid var(--bdr);border-radius:var(--rs);padding:13px 16px;display:flex;align-items:center;gap:12px;font-size:14px;cursor:grab;transition:border-color .18s,background .18s,transform .18s,opacity .18s;user-select:none;}
+.ord-item:active{cursor:grabbing;}
+.ord-item.dragging-ord{opacity:.25;background:var(--card);transform:scale(.98);}
+.ord-item.drag-over-ord{border-color:var(--green);background:rgba(29,185,84,.07);transform:translateY(-2px);}
+.ord-handle{font-size:16px;color:rgba(255,255,255,.25);flex-shrink:0;cursor:grab;line-height:1;letter-spacing:-1px;}
+.ord-num{width:26px;height:26px;background:var(--glo);border:1px solid var(--gmd);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Nunito',sans-serif;font-size:11px;font-weight:800;color:var(--green);flex-shrink:0;transition:all .2s;}
+
+/* ═══ CONVERSATION ════════════════════════════════════════ */
+.convo{display:flex;flex-direction:column;gap:11px;margin-top:12px;}
+.msg{display:flex;gap:10px;align-items:flex-end;}
+.msg.r{flex-direction:row-reverse;}
+.mbub{max-width:78%;background:var(--card);border:1px solid var(--bdr);border-radius:16px;border-bottom-left-radius:4px;padding:12px 16px;font-size:14px;line-height:1.7;color:var(--lt);}
+.msg.r .mbub{background:rgba(29,185,84,.1);border-color:var(--gmd);border-bottom-right-radius:4px;border-bottom-left-radius:16px;}
+.mav{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;background:var(--card);border:1px solid var(--bdr);}
+
+/* ═══ VOCAB HIGHLIGHT WORD ════════════════════════════════ */
+.tag-row{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px;}
+.tag{display:inline-block;background:var(--glo);border:1px solid var(--gmd);border-radius:5px;padding:3px 10px;font-family:'Nunito',sans-serif;font-size:10px;color:var(--green);font-weight:700;}
+.ytag{display:inline-block;background:var(--ylo-lo);border:1px solid rgba(250,204,21,.2);border-radius:5px;padding:3px 10px;font-family:'Nunito',sans-serif;font-size:10px;color:var(--ylo);font-weight:700;}
+
+/* ═══ TEXTAREA ════════════════════════════════════════════ */
+.ta{width:100%;background:rgba(255,255,255,.025);border:1px solid var(--bdr);border-radius:var(--rs);color:var(--wh);font-family:'DM Sans',sans-serif;font-size:14px;padding:12px 14px;resize:vertical;outline:none;min-height:72px;line-height:1.7;transition:border-color .2s;}
+.ta:focus{border-color:rgba(29,185,84,.32);}
+.ta::placeholder{color:rgba(255,255,255,.18);}
+
+/* ═══ DIVIDER ════════════════════════════════════════════ */
+.div{height:1px;background:var(--bdr);margin:16px 0;}
+
+/* ═══ GUIDE ══════════════════════════════════════════════ */
+.gg{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:12px;}
+@media(max-width:520px){.gg{grid-template-columns:1fr;}}
+.gb{background:rgba(255,255,255,.02);border:1px solid var(--bdr);border-radius:10px;padding:16px;}
+.gb h4{font-family:'Nunito',sans-serif;font-size:9px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--green);margin-bottom:9px;}
+.gb ul{list-style:none;}
+.gb li{font-size:13px;color:rgba(255,255,255,.65);padding:3px 0;display:flex;gap:7px;line-height:1.45;}
+.gb li::before{content:'→';color:var(--green);flex-shrink:0;}
+
+/* ═══ VIDEO ══════════════════════════════════════════════ */
+.yt{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:var(--r);margin:14px 0;}
+.yt iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;border-radius:var(--r);}
+
+/* ═══ COVER ══════════════════════════════════════════════ */
+.covwrap{min-height:calc(100vh - var(--nav));display:flex;flex-direction:column;justify-content:center;}
+.eyebrow{font-family:'Nunito',sans-serif;font-weight:800;font-size:10px;letter-spacing:.24em;color:var(--green);text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:9px;}
+.eyebrow::before{content:'';width:26px;height:2px;background:var(--green);display:block;}
+.covh1{font-family:'Nunito',sans-serif;font-weight:900;font-size:clamp(38px,9vw,72px);line-height:.95;letter-spacing:-.025em;margin-bottom:10px;}
+.covh1 em{color:var(--green);font-style:normal;}
+.covdesc{font-size:15px;color:var(--gr);max-width:480px;line-height:1.75;margin-top:12px;}
+.covpills{display:flex;flex-wrap:wrap;gap:7px;margin:22px 0 30px;}
+.pill{background:var(--dim);border:1px solid var(--bdr);border-radius:20px;padding:4px 12px;font-size:11px;color:var(--gr);font-family:'Nunito',sans-serif;font-weight:600;}
+.wave{display:flex;align-items:flex-end;gap:3px;height:38px;margin-bottom:22px;}
+.wb2{width:3px;border-radius:2px 2px 0 0;background:var(--green);}
+.wb2:nth-child(1){animation:wv .7s ease-in-out infinite alternate;height:8px;}
+.wb2:nth-child(2){animation:wv 1.1s ease-in-out infinite alternate;height:24px;}
+.wb2:nth-child(3){animation:wv .9s ease-in-out infinite alternate;height:14px;}
+.wb2:nth-child(4){animation:wv 1.3s ease-in-out infinite alternate;height:32px;}
+.wb2:nth-child(5){animation:wv .8s ease-in-out infinite alternate;height:18px;}
+.wb2:nth-child(6){animation:wv 1.0s ease-in-out infinite alternate;height:38px;}
+.wb2:nth-child(7){animation:wv .65s ease-in-out infinite alternate;height:12px;}
+.wb2:nth-child(8){animation:wv 1.2s ease-in-out infinite alternate;height:28px;}
+.wb2:nth-child(9){animation:wv .75s ease-in-out infinite alternate;height:10px;}
+@keyframes wv{to{transform:scaleY(2.2);}}
+
+/* ═══ COMPLETION ══════════════════════════════════════════ */
+.cbadge{width:82px;height:82px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:38px;margin:0 auto 18px;animation:pop .6s cubic-bezier(.34,1.56,.64,1);}
+@keyframes pop{from{transform:scale(0);}to{transform:scale(1);}}
+.cscore{font-family:'Nunito',sans-serif;font-size:56px;font-weight:900;color:var(--green);text-align:center;}
+.clbl{text-align:center;font-size:10px;color:var(--gr);font-family:'Nunito',sans-serif;font-weight:700;letter-spacing:.18em;text-transform:uppercase;margin-top:4px;}
+
+/* ═══ FOOTER ══════════════════════════════════════════════ */
+.foot{max-width:740px;margin:24px auto 0;padding:18px 18px;border-top:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.foot-brand{display:flex;align-items:center;gap:8px;}
+.foot-disc{width:20px;height:20px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Nunito',sans-serif;font-weight:900;font-size:9px;color:#000;}
+.foot-name{font-family:'Nunito',sans-serif;font-weight:800;font-size:10px;letter-spacing:.18em;color:var(--gr);text-transform:uppercase;}
+.foot-meta{font-size:10px;color:rgba(255,255,255,.2);font-family:'Nunito',sans-serif;}
+
+/* ═══ VOCAB BADGE ═════════════════════════════════════════ */
+.vbadge-wrap{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:14px;}
+@media(max-width:480px){.vbadge-wrap{grid-template-columns:1fr;}}
+.vbadge{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--r);padding:18px;cursor:pointer;transition:all .22s;display:flex;align-items:center;gap:14px;}
+.vbadge:hover{border-color:var(--gmd);background:rgba(29,185,84,.04);}
+.vb-emoji{font-size:28px;flex-shrink:0;}
+.vb-word{font-family:'Nunito',sans-serif;font-weight:800;font-size:18px;color:var(--green);}
+.vb-hint{font-size:12px;color:var(--gr);margin-top:2px;}
+
+/* ═══ STARS RATING ════════════════════════════════════════ */
+.stars{display:flex;gap:8px;margin-top:12px;}
+.star-btn{background:var(--elev);border:1px solid var(--bdr);border-radius:var(--rs);padding:11px 18px;cursor:pointer;font-size:13px;transition:all .18s;flex:1;text-align:center;color:var(--lt);}
+.star-btn:hover{border-color:rgba(255,255,255,.18);background:var(--hover);}
+.star-btn.sel-ok{border-color:var(--green);background:rgba(29,185,84,.08);color:#22c55e;}
+.star-btn.sel-warn{border-color:var(--ylo);background:var(--ylo-lo);color:var(--ylo);}
+.star-btn.sel-bad{border-color:var(--red);background:var(--rlo);color:#f87171;}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════ VOCAB SIDEBAR -->
+<div class="veil" id="veil" onclick="closeSB()"></div>
+<aside class="vsb" id="vsb">
+  <div class="vsb-top">
+    <span class="vsb-label">📖 Vocabulary</span>
+    <div class="vsb-close" onclick="closeSB()">✕</div>
+  </div>
+  <div class="vsb-body">
+    <span class="vsb-emoji" id="vsb-emoji">⏰</span>
+    <div class="vsb-word" id="vsb-word">wake up</div>
+    <div class="vsb-pron" id="vsb-pron">/weɪk ʌp/</div>
+    <div class="vsb-section">
+      <div class="vsb-tag">Meaning</div>
+      <p class="vsb-text" id="vsb-mean">—</p>
+    </div>
+    <div class="vsb-section">
+      <div class="vsb-tag">Synonym</div>
+      <p class="vsb-text" id="vsb-syn">—</p>
+    </div>
+    <div class="vsb-section">
+      <div class="vsb-tag">Example</div>
+      <div class="vsb-ex" id="vsb-ex">—</div>
+    </div>
+    <div class="vsb-section">
+      <div class="vsb-tag">In the Video</div>
+      <div class="vsb-ex" id="vsb-vid">—</div>
+    </div>
+    <div class="vsb-speak">
+      <div class="vsb-speak-hd">Your Turn — Speak</div>
+      <p class="vsb-speak-q" id="vsb-q">—</p>
+      <div class="vsb-starter" id="vsb-s1">—</div>
+      <div class="vsb-starter" id="vsb-s2" style="display:none;">—</div>
+    </div>
+  </div>
+</aside>
+
+<!-- ══════════════════════ WHITEBOARD (LEFT SIDE) -->
+<div class="wb-panel" id="wbp">
+  <div class="wb-hd">
+    <span class="wb-title">✏ Whiteboard</span>
+    <div class="wb-close" onclick="toggleWB()">✕</div>
+  </div>
+  <div class="wb-tools">
+    <div class="wb-tool active" id="wbt-note" onclick="wbMode('note')">📝 Notes</div>
+    <div class="wb-tool" id="wbt-vocab" onclick="wbMode('vocab')">🔤 Vocab</div>
+    <div class="wb-tool" id="wbt-error" onclick="wbMode('error')">❌ Errors</div>
+    <div class="wb-tool" id="wbt-hw" onclick="wbMode('hw')">📚 HW</div>
+  </div>
+  <div class="wb-area">
+    <textarea class="wb-textarea" id="wb-text" placeholder="Type notes for the student here…&#10;&#10;The student can see this in real time!"></textarea>
+  </div>
+  <div class="wb-bottom">
+    <div class="wb-action" onclick="wbClear()">🗑 Clear</div>
+    <div class="wb-action green-action" onclick="wbSave()">💾 Save</div>
+    <div class="wb-action" onclick="wbCopy()">📋 Copy</div>
+  </div>
+  <div class="wb-saved" id="wb-saved">✅ Saved!</div>
+</div>
+
+<!-- ══════════════════════ TOP NAV -->
+<nav class="nav">
+  <div class="nav-brand">
+    <div class="nav-disc">W</div>
+    <span class="nav-name">Wolf Labs</span>
+  </div>
+  <div class="nav-mid">
+    <span class="nav-step" id="nstep">0/30</span>
+    <div class="prog-rail"><div class="prog-fill" id="pfill"></div></div>
+  </div>
+  <div class="nav-acts">
+    <div class="na" id="nav-jump" title="Jump to page" onclick="toggleJump()">☰</div>
+    <div class="na" id="nav-wb" title="Whiteboard" onclick="toggleWB()">✏</div>
+    <div class="na" title="Fullscreen" onclick="toggleFS()">⛶</div>
+  </div>
+</nav>
+
+<!-- ══════════════════════ JUMP TO PAGE PANEL -->
+<div class="jump-panel" id="jump-panel">
+  <div class="jump-hd">
+    <span class="jump-hd-title">☰ Jump to Page</span>
+    <div class="na" style="width:24px;height:24px;" onclick="toggleJump()">✕</div>
+  </div>
+  <input class="jump-search" id="jump-search" type="text" placeholder="Search screen…" oninput="filterJump(this.value)">
+  <div class="jump-list" id="jump-list"></div>
+</div>
+
+<!-- ══════════════════════ LESSON -->
+<main class="lesson">
+
+<!-- ▓▓▓▓▓ S0: TEACHER GUIDE ▓▓▓▓▓ -->
+<div class="screen on" id="s0">
+  <div class="clabel"><span class="cdot"></span>Teacher Guide</div>
+  <h2>Lesson Briefing</h2>
+  <p class="muted mt6" style="margin-bottom:16px;">Read this before starting. Do not show to the student.</p>
+  <div class="card cg">
+    <div class="tag-row">
+      <span class="tag">A1 Beginner</span><span class="tag">Main Series</span>
+      <span class="tag">Daily Routines</span><span class="tag">Simple Present</span><span class="tag">~55 min · 30 screens</span>
+    </div>
+    <p style="margin-bottom:14px;line-height:1.85;"><strong>Objective:</strong> The student will be able to describe daily routines using the simple present tense — including <em>He/She + verb+S</em> — and use 5 key vocabulary phrases naturally in speaking, anchored to a real video.</p>
+    <div class="gg">
+      <div class="gb"><h4>5 Key Words</h4><ul><li>wake up</li><li>hit snooze</li><li>make breakfast</li><li>head out</li><li>commute</li></ul></div>
+      <div class="gb"><h4>Grammar targets</h4><ul><li>I + base verb</li><li>She/He + verb+S</li><li>doesn't + base verb</li><li>Do/Does questions</li></ul></div>
+      <div class="gb"><h4>Wolf Method</h4><ul><li>Student speaks 80%</li><li>Always use starters</li><li>Infer grammar first</li><li>No yes/no questions</li></ul></div>
+      <div class="gb"><h4>A1 Tips</h4><ul><li>Read starters aloud with student</li><li>Pause video at 1:20 + 3:10</li><li>Allow L1 for meaning</li><li>Praise every attempt</li></ul></div>
+    </div>
+  </div>
+  <div class="card mt12">
+    <h3>⚠ Before class</h3>
+    <p>Pre-teach pronunciation of <em>commute /kəˈmjuːt/</em> and <em>routine /ruːˈtiːn/</em>. Open the whiteboard (✏ button, top right) and write today's vocabulary before the student arrives.</p>
+  </div>
+  <div class="nav-row"><button class="nav-back" onclick="goBack()">← Back</button><button class="btn bgo" onclick="goTo(1)">Open Lesson ▶</button></div>
+</div>
+
+<!-- ▓▓▓▓▓ S1: COVER ▓▓▓▓▓ -->
+<div class="screen" id="s1">
+  <div class="covwrap">
+    <div class="wave"><div class="wb2"></div><div class="wb2"></div><div class="wb2"></div><div class="wb2"></div><div class="wb2"></div><div class="wb2"></div><div class="wb2"></div><div class="wb2"></div><div class="wb2"></div></div>
+    <div class="eyebrow">Wolf Labs · Main Series · A1 Beginner</div>
+    <div class="covh1">WHAT DO<br>YOU DO<br><em>EVERY DAY?</em></div>
+    <p class="covdesc">A real English lesson built around a real video. Discover vocabulary, explore grammar in context, and speak from the very first activity.</p>
+    <div class="covpills">
+      <span class="pill">🎬 Real Video</span><span class="pill">A1 · Beginner</span>
+      <span class="pill">Simple Present</span><span class="pill">Drag & Drop</span>
+    </div>
+    <button class="btn bgo" style="font-size:13px;padding:14px 36px;" onclick="goTo(2)">▶ &nbsp;Begin</button>
+  </div>
+</div>
+
+<!-- ▓▓▓▓▓ S2: WARM-UP — CHECKLIST ▓▓▓▓▓ -->
+<div class="screen" id="s2">
+  <div class="clabel"><span class="cdot"></span>Warm-Up · Screen 2</div>
+  <h2>Your Morning Routine</h2>
+  <p class="mt6">Before the video — let's talk about <strong>you</strong>. Look at these activities. <strong>Which ones do you do every morning?</strong></p>
+  <div class="card mt12">
+    <h3>✅ Tick everything that is TRUE for you:</h3>
+    <div style="display:flex;flex-direction:column;gap:9px;margin-top:10px;" id="wuchecks">
+      <label class="mop" style="cursor:pointer;border-radius:9px;"><input type="checkbox" style="accent-color:var(--green);width:16px;height:16px;flex-shrink:0;">&nbsp;⏰ I wake up with an alarm</label>
+      <label class="mop" style="cursor:pointer;border-radius:9px;"><input type="checkbox" style="accent-color:var(--green);width:16px;height:16px;flex-shrink:0;">&nbsp;💤 I hit snooze and sleep more</label>
+      <label class="mop" style="cursor:pointer;border-radius:9px;"><input type="checkbox" style="accent-color:var(--green);width:16px;height:16px;flex-shrink:0;">&nbsp;🚿 I go to the bathroom / shower</label>
+      <label class="mop" style="cursor:pointer;border-radius:9px;"><input type="checkbox" style="accent-color:var(--green);width:16px;height:16px;flex-shrink:0;">&nbsp;🍳 I eat breakfast at home</label>
+      <label class="mop" style="cursor:pointer;border-radius:9px;"><input type="checkbox" style="accent-color:var(--green);width:16px;height:16px;flex-shrink:0;">&nbsp;📱 I check my phone immediately</label>
+      <label class="mop" style="cursor:pointer;border-radius:9px;"><input type="checkbox" style="accent-color:var(--green);width:16px;height:16px;flex-shrink:0;">&nbsp;🚪 I leave home before 8am</label>
+    </div>
+    <button class="btn bck mt12" onclick="showWU()">See My Result →</button>
+    <div class="fb" id="wu-fb"></div>
+  </div>
+
+  <div class="skip-wrap"><button class="skip-btn" onclick="document.getElementById('wu-nav').style.display='flex';">Skip exercise</button></div>
+  <div class="nav-row" id="wu-nav" style="display:none;">
+    <button class="nav-back" onclick="goBack()">← Back</button>
+    <button class="btn bgo" onclick="goTo(3)">Talk About It →</button>
+  </div>
+</div>
+
+<!-- ▓▓▓▓▓ S3: WARM-UP SPEAKING ▓▓▓▓▓ -->
+<div class="screen" id="s3">
+  <div class="clabel"><span class="cdot"></span>Warm-Up Speaking · Screen 3</div>
+  <h2>Tell Your Teacher</h2>
+  <p class="mt6">Now <strong>speak</strong> about your morning. Use the sentence starters below. Your teacher will listen!</p>
+  <div class="spk mt12">
+    <div class="spk-hd">Speak Now — A1 Starters</div>
+    <p>Complete each sentence with true information about you:</p>
+    <div class="starter mt10"><strong>Every morning, I wake up at ___.</strong></div>
+    <div class="starter"><strong>I eat ___ for breakfast.</strong> &nbsp; OR &nbsp; <strong>I don't eat breakfast.</strong></div>
+    <div class="starter"><strong>I leave home at ___ o'clock.</strong></div>
+    <div class="starter"><strong>I go to work / school by ___.</strong></div>
+  </div>
+  <div class="card mt12">
+    <h3>Your teacher will ask:</h3>
+    <p>"Do you hit snooze? <strong>Why / why not?</strong>"</p>
+    <p class="muted mt6">Answer with: <em>"Yes, I hit snooze because… / No, I never hit snooze because…"</em></p>
+  </div>
+  <div class="spk mt12">
+    <div class="spk-hd">Think About This</div>
+    <p>Is your morning easy or difficult? What is the hardest part of your morning?</p>
+    <div class="starter"><strong>The hardest part of my morning is ___.</strong></div>
+    <div class="starter"><strong>I always / never ___  in the morning.</strong></div>
+  </div>
+  <div class="nav-row"><button class="nav-back" onclick="goBack()">← Back</button><button class="btn bgo" onclick="goTo(4)">Meet Sarah →</button></div>
+</div>
+
+<!-- ▓▓▓▓▓ S4: MEET SARAH — VOCAB IN CONTEXT ▓▓▓▓▓ -->
+<div class="screen" id="s4">
+  <div class="clabel"><span class="cdot"></span>Vocabulary in Context · Screen 4</div>
+  <h2>Meet Sarah</h2>
+  <p class="muted mt6 mt12">Read about Sarah. Tap the <span class="gc" style="border-bottom:1px dotted var(--green);cursor:pointer;">green words</span> — a panel will open with the full meaning, examples and a speaking question.</p>
+  <div class="card cd mt12">
+    <p style="font-size:15.5px;line-height:2.4;">
+      <span style="font-size:32px;float:left;margin-right:14px;margin-top:6px;">👩‍💼</span>
+      Sarah is 26 years old. She lives in New York City.
+      Every day, she <span class="vw" onclick="openSB('wakeup')">wakes up</span> at 8am.
+      She is not a morning person — so she often <span class="vw" onclick="openSB('snooze')">hits snooze</span> on her alarm clock.
+      After the bathroom, she goes to the kitchen and <span class="vw" onclick="openSB('breakfast')">makes breakfast</span>.
+      She doesn't like typical American food. She prefers fruits and vegetables.
+      She also <span class="vw" onclick="openSB('makebed')">makes her bed</span> before leaving — she likes a clean room.
+      Then she <span class="vw" onclick="openSB('headout')">heads out</span> the door and <span class="vw" onclick="openSB('commute')">commutes</span> to work by subway. It takes about 15 minutes.
+    </p>
+  </div>
+  <div class="card mt12">
+    <h3>💬 Think about Sarah:</h3>
+    <p>What is similar between Sarah's morning and your morning?</p>
+    <textarea class="ta mt10" placeholder="Sarah wakes up at 8am. I wake up at ___…  She hits snooze. I never / always…" rows="3"></textarea>
+  </div>
+  <div class="spk mt12">
+    <div class="spk-hd">Speak Now — Compare</div>
+    <p>Use these starters to compare yourself and Sarah:</p>
+    <div class="starter"><strong>Sarah wakes up at 8am.</strong> I wake up at ___.</div>
+    <div class="starter"><strong>She makes breakfast.</strong> I usually eat ___.</div>
+    <div class="starter"><strong>She commutes by subway.</strong> I go by ___.</div>
+  </div>
+  <div class="nav-row"><button class="nav-back" onclick="goBack()">← Back</button><button class="btn bgo" onclick="goTo(5)">Learn the Words →</button></div>
+</div>
+
+<!-- ▓▓▓▓▓ S5: VOCAB 1 — WAKE UP ▓▓▓▓▓ -->
+<div class="screen" id="s5">
+  <div class="clabel"><span class="cdot"></span>Vocabulary 1 of 5 · Screen 5</div>
+  <h2>Word: <span class="gc">wake up</span></h2>
+  <div class="card cg mt12">
+    <div style="display:flex;align-items:center;gap:18px;margin-bottom:16px;">
+      <span style="font-size:48px;">⏰</span>
+      <div><div style="font-family:'Nunito',sans-serif;font-size:28px;font-weight:900;color:var(--green);">wake up</div><div style="font-size:14px;color:var(--gr);font-style:italic;">/weɪk ʌp/</div></div>
+    </div>
+    <div class="div"></div>
+    <div class="tag-row"><span class="tag">Meaning</span></div>
+    <p>To <strong>stop sleeping</strong> and open your eyes. To become conscious in the morning and start your day.</p>
+    <div class="tag-row mt12"><span class="tag">Synonym</span></div>
+    <p>get up · rise · stir</p>
+    <div class="tag-row mt12"><span class="tag">Example</span></div>
+    <p style="font-style:italic;">"I wake up at 7am every day." &nbsp;|&nbsp; "She <strong>wakes up</strong> at 8am." (+ S!)</p>
+  </div>
+  <div class="card mt12">
+    <h3>❓ Quick check — which sentence is correct?</h3>
+    <div class="mcq" id="vq1">
+      <div class="mop" onclick="chkMCQ(this,'vq1','A','B','vq1-fb')"><span class="oky">A</span>"She wake up at 8am."</div>
+      <div class="mop" onclick="chkMCQ(this,'vq1','B','B','vq1-fb')"><span class="oky">B</span>"She <strong>wakes up</strong> at 8am." ⭐</div>
+      <div class="mop" onclick="chkMCQ(this,'vq1','C','B','vq1-fb')"><span class="oky">C</span>"She is wake up at 8am."</div>
+    </div>
+    <div class="fb" id="vq1-fb"></div>
+  </div>
+  <div class="spk mt12">
+    <div class="spk-hd">Speak Now</div>
+    <p>Answer your teacher with a full sentence:</p>
+    <div class="starter"><strong>I wake up at ___ every morning.</strong></div>
+    <div class="starter">On weekends, <strong>I wake up at ___. I never wake up before ___.</strong></div>
+  </div>
+  <div class="nav-row"><button class="nav-back" onclick="goBack()">← Back</button><button class="btn bgo" onclick="goTo(6)">Next Word →</button></div>
+</div>
+
+<!-- ▓▓▓▓▓ S6: VOCAB 2 — HIT SNOOZE ▓▓▓▓▓ -->
+<div class="screen" id="s6">
+  <div class="clabel"><span class="cdot"></span>Vocabulary 2 of 5 · Screen 6</div>
+  <h2>Word: <span class="gc">hit snooze</span></h2>
+  <div class="card cg mt12">
+    <div style="display:flex;align-items:center;gap:18px;margin-bottom:16px;">
+      <span style="font-size:48px;">💤</span>
+      <div><div style="font-family:'Nunito',sans-serif;font-size:28px;font-weight:900;color:var(--green);">hit snooze</div><div style="font-size:14px;color:var(--gr);font-style:italic;">/hɪt snuːz/</div></div>
+    </div>
+    <div class="div"></div>
+    <div class="tag-row"><span class="tag">Meaning</span></div>
+    <p>To press the <strong>snooze button</strong> on your alarm clock to get 5–10 more minutes of sleep before it rings again.</p>
+    <div class="tag-row mt12"><span class="tag">In the video</span></div>
+    <p style="font-style:italic;">"I'm not a morning person, so sometimes I will <strong>hit snooze</strong> on my alarm clock."</p>
+    <div class="tag-row mt12"><span class="tag">Grammar note</span></div>
+    <p>I hit snooze. → She <strong>hits</strong> snooze. (She/He/It always gets +S!)</p>
+  </div>
+  <div class="card mt12">
+    <h3>❓ Complete the sentence:</h3>
+    <div class="blline">Sarah <input class="blinput" id="hs1" placeholder="?"> snooze every morning.</div>
+    <button class="btn bck" style="font-size:11px;padding:7px 16px;" onclick="chkBlank('hs1','hits','hs1f','Sarah <b>hits</b> snooze. ✓ She = verb+S!')">Check →</button>
+    <div class="fb" id="hs1f"></div>
+  </div>
+  <div class="spk mt12">
+    <div class="spk-hd">Speak Now</div>
+    <div class="starter"><strong>I hit snooze ___ times every morning.</strong></div>
+    <div class="starter"><strong>I never hit snooze because ___.</strong></div>
+    <div class="starter">Then your teacher asks: <em>"Is hitting snooze a good habit? Why / why not?"</em></div>
+  </div>
+  <div class="nav-row"><button class="nav-back" onclick="goBack()">← Back</button><button class="btn bgo" onclick="goTo(7)">Next Word →</button></div>
+</div>
+
+<!-- ▓▓▓▓▓ S7: VOCAB 3 — MAKE BREAKFAST ▓▓▓▓▓ -->
+<div class="screen" id="s7">
+  <div class="clabel"><span class="cdot"></span>Vocabulary 3 of 5 · Screen 7</div>
+  <h2>Word: <span class="gc">make breakfast</span></h2>
+  <div class="card cg mt12">
+    <div style="display:flex;align-items:center;gap:18px;margin-bottom:16px;">
+      <span style="font-size:48px;">🍳</span>
+      <div><div style="font-family:'Nunito',sans-serif;font-size:26px;font-weight:900;color:var(--green);">make breakfast</div><div style="font-size:14px;color:var(--gr);font-style:italic;">/meɪk ˈbrekfəst/</div></div>
+    </div>
+    <div class="div"></div>
+    <div class="tag-row"><span class="tag">Meaning</span></div>
+    <p>To <strong>prepare your morning meal</strong> at home. In English, we say <em>make</em> breakfast — not "cook breakfast".</p>
+    <div class="tag-row mt12"><span class="tag">Important!</span></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;">
+      <span style="background:rgba(29,185,84,.08);border:1px solid var(--gmd);border-radius:7px;padding:7px 13px;font-size:13px;color:#22c55e;">✅ I <strong>make</strong> breakfast</span>
+      <span style="background:rgba(29,185,84,.08);border:1px solid var(--gmd);border-radius:7px;padding:7px 13px;font-size:13px;color:#22c55e;">✅ She <strong>makes</strong> breakfast</span>
+      <span style="background:var(--rlo);border:1px solid rgba(233,20,41,.22);border-radius:7px;padding:7px 13px;font-size:13px;color:#f87171;">❌ I <s>cook</s> breakfast</span>
+    </div>
+    <div class="tag-row mt12"><span class="tag">In the Video</span></div>
+    <p style="font-style:italic;">"Now it's time to <strong>make breakfast</strong>. I don't like typical American food. I like eating fruits and veggies."</p>
+  </div>
+  <div class="spk mt12">
+    <div class="spk-hd">Speak Now</div>
+    <div class="starter"><strong>I make breakfast every morning. I usually eat ___.</strong></div>
+    <div class="starter"><strong>I don't make breakfast. I usually eat ___ or I buy ___.</strong></div>
+    <div class="starter">Teacher asks: <em>"What do you eat for breakfast? Why do you like it?"</em></div>
+  </div>
+  <div class="nav-row"><button class="nav-back" onclick="goBack()">← Back</button><button class="btn bgo" onclick="goTo(8)">Next Word →</button></div>
+</div>
+
+<!-- ▓▓▓▓▓ S8: VOCAB 4 — HEAD OUT ▓▓▓▓▓ -->
+<div class="screen" id="s8">
+  <div class="clabel"><span class="cdot"></span>Vocabulary 4 of 5 · Screen 8</div>
+  <h2>Word: <span class="gc">head out</span></h2>
+  <div class="card cg mt12">
+    <div style="display:flex;align-items:center;gap:18px;margin-bottom:16px;">
+      <span style="font-size:48px;">🚪</span>
+      <div><div style="font-family:'Nunito',sans-serif;font-size:28px;font-weight:900;color:var(--green);">head out</div><div style="font-size:14px;color:var(--gr);font-style:italic;">/hɛd aʊt/</div></div>
+    </div>
+    <div class="div"></div>
+    <div class="tag-row"><span class="tag">Meaning</span></div>
+    <p>To <strong>leave a place</strong> — usually your home. Very natural and informal in spoken English.</p>
+    <div class="tag-row mt12"><span class="tag">Synonym</span></div>
+    <p>leave · go out · set off · depart</p>
+    <div class="tag-row mt12"><span class="tag">Examples</span></div>
+    <p style="font-style:italic;">"I head out at 8:45 every morning." <br>"She <strong>heads out</strong> the door." (+S with She!)</p>
+    <div class="tag-row mt12"><span class="tag">Common pattern</span></div>
+    <p><em>head out + at + time</em> &nbsp;|&nbsp; <em>head out + the door</em> &nbsp;|&nbsp; <em>head to + place</em></p>
+  </div>
+  <div class="card mt12">
+    <h3>❓ Fill in:</h3>
+    <div class="blline">She <input class="blinput" id="ho1" placeholder="?"> out at 8:45.</div>
+    <button class="btn bck" style="font-size:11px;padding:7px 16px;" onclick="chkBlank('ho1','heads','ho1f','She <b>heads</b> out. ✓ She = verb+S!')">Check →</button>
+    <div class="fb" id="ho1f"></div>
+  </div>
+  <div class="spk mt12">
+    <div class="spk-hd">Speak Now</div>
+    <div class="starter"><strong>I head out at ___ every morning.</strong></div>
+    <div class="starter"><strong>Before I head out, I always ___.</strong></div>
+  </div>
+  <div class="nav-row"><button class="nav-back" onclick="goBack()">← Back</button><button class="btn bgo" onclick="goTo(9)">Last Word →</button></div>
+</div>
+
+<!-- ▓▓▓▓▓ S9: VOCAB 5 — COMMUTE ▓▓▓▓▓ -->
+<div class="screen" id="s9">
+  <div class="clabel"><span class="cdot"></span>Vocabulary 5 of 5 · Screen 9</div>
+  <h2>Word: <span class="gc">commute</span></h2>
+  <div class="card cg mt12">
+    <div style="display:flex;align-items:center;gap:18px;margin-bottom:16px;">
+      <span style="font-size:48px;">🚇</span>
+      <div><div style="font-family:'Nunito',sans-serif;font-size:28px;font-weight:900;color:var(--green);">commute</div><div style="font-size:14px;color:var(--gr);font-style:italic;">/kəˈmjuːt/</div></div>
+    </div>
+    <div class="div"></div>
+    <div class="tag-row"><span class="tag">Meaning</span></div>
+    <p>To <strong>travel regularly</strong> between your home and your workplace or school — every day or every week.</p>
+    <div class="tag-row mt12"><span class="tag">As a VERB</span></div>
+    <p style="font-style:italic;">"I <strong>commute</strong> by bus." &nbsp;|&nbsp; "She <strong>commutes</strong> by subway." (+S!)</p>
+    <div class="tag-row mt12"><span class="tag">As a NOUN</span></div>
+    <p style="font-style:italic;">"My <strong>commute</strong> takes 20 minutes." &nbsp;|&nbsp; "I have a long/short commute."</p>
+    <div class="tag-row mt12"><span class="tag">In the video</span></div>
+    <p style="font-style:italic;">"I head out the door and <strong>commute</strong> to work. It takes about 15 minutes."</p>
+  </div>
+  <div class="spk mt12">
+    <div class="spk-hd">Speak Now</div>
+    <div class="starter"><strong>I commute to work / school by ___.</strong></div>
+    <div class="starter"><strong>My commute takes ___ minutes.</strong></div>
+    <div class="starter">Teacher asks: <em>"Do you enjoy your commute? What do you do on the way?"</em></div>
+  </div>
+  <div class="nav-row"><button class="nav-back" onclick="goBack()">← Back</button><button class="btn bgo" onclick="goTo(10)">Vocabulary Review →</button></div>
+</div>
+
+<!-- ▓▓▓▓▓ S10: VOCAB REVIEW — MATCHING ▓▓▓▓▓ -->
+<div class="screen" id="s10">
+  <div class="clabel"><span class="cdot"></span>Vocabulary Review · Screen 10</div>
+  <h2>Match the Words</h2>
+  <p class="mt6">Tap a word on the left, then tap the correct meaning on the right. Match all 5 pairs.</p>
+  <div class="match-grid mt12" id="match-wrap">
+    <div class="match-col">
+      <h4>Word / Phrase</h4>
+      <div class="mitem" id="ml0" onclick="matchClick('l',0)">⏰ wake up</div>
+      <div class="mitem" id="ml1" onclick="matchClick('l',1)">💤 hit snooze</div>
+      <div class="mitem" id="ml2" onclick="matchClick('l',2)">🍳 make breakfast</div>
+      <div class="mitem" id="ml3" onclick="matchClick('l',3)">🚪 head out</div>
+      <div class="mitem" id="ml4" onclick="matchClick('l',4)">🚇 commute</div>
+    </div>
+    <div class="match-col">
+      <h4>Meaning</h4>
+      <div class="mitem" id="mr0" onclick="matchClick('r',0)">Press the delay button on an alarm</div>
+      <div class="mitem" id="mr1" onclick="matchClick('r',1)">Leave home</div>
+      <div class="mitem" id="mr2" onclick="matchClick('r',2)">Stop sleeping, open your eyes</div>
+      <div class="mitem" id="mr3" onclick="matchClick('r',3)">Travel daily to work or school</div>
+      <div class="mitem" id="mr4" onclick="matchClick('r',4)">Prepare your morning meal</div>
+    </div>
+  </div>
+  <div class="fb" id="match-fb"></div>
+  <div class="spk mt12" id="match-spk" style="display:none;">
+    <div class="spk-hd">Speak Now</div>
+    <p>Make one sentence for each word. Use <strong>I</strong> and make them true for you!</p>
+    <div class="starter"><strong>I wake up at ___. I hit snooze ___. I make ___. I head out at ___. I commute by ___.</strong></div>
+  </div>
+
+  <div class="skip-wrap"><button class="skip-btn" onclick="document.getElementById('match-spk').style.display='flex'; document.getElementById('match-nav').style.display='flex';">Skip exercise</button></div>
+  <div class="nav-row" id="match-nav" style="display:none;"><button class="nav-back" onclick="goBack()">← Back</button><button class="btn bgo" onclick="goTo(11)">Watch the Video →</button></div>
+</div>
+
+<!-- ▓▓▓▓▓ S11: VIDEO — INSTRUCTIONS ▓▓▓▓▓ -->
+<div class="screen" id="s11">
+  <div class="clabel"><span class="cdot"></span>Video · Screen 11</div>
+  <h2>Before You Watch</h2>
+  <p class="mt6">You are going to watch a real video about a person's morning routine. <strong>Don't worry</strong> — you already know all the key vocabulary!</p>
+  <div class="card cg mt12">
+    <h3>👁 While you watch, look for these 3 things:</h3>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-top:10px;">
+      <div style="display:flex;gap:11px;font-size:15px;"><span class="gc" style="font-family:'Nunito',sans-serif;font-weight:800;flex-shrink:0;">1.</span><span>What time does she <strong>wake up</strong>?</span></div>
+      <div style="display:flex;gap:11px;font-size:15px;"><span class="gc" style="font-family:'Nunito',sans-serif;font-weight:800;flex-shrink:0;">2.</span><span>What does she eat for <strong>breakfast</strong>?</span></div>
+      <div style="display:flex;gap:11px;font-size:15px;"><span class="gc" style="font-family:'Nunito',sans-serif;font-weight:800;flex-shrink:0;">3.</span><span>What does she do <strong>before she leaves</strong> the house?</span></div>
+    </div>
+  </div>
+  <div class="card mt12">
+    <h3>🎬 Teacher: pause the video at these moments:</h3>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;">
+      <span style="background:var(--card);border:1px solid var(--bdr);border-radius:7px;padding:8px 14px;font-size:13px;">⏸ 1:20 — ask: "What does she do now?"</span>
+      <span style="background:var(--card);border:1px solid var(--bdr);border-radius:7px;padding:8px 14px;font-size:13px;">⏸ 3:10 — ask: "Why does she do this?"</span>
+    </div>
+  </div>
+  <div class="nav-row"><button class="nav-back" onclick="goBack()">← Back</button><button class="btn bgo" onclick="goTo(12)">Watch Now →</button></div>
+</div>
+
+<!-- ▓▓▓▓▓ S12: VIDEO ▓▓▓▓▓ -->
+<div class="screen" id="s12">
+  <div class="clabel"><span class="cdot"></span>Video · Screen 12</div>
+  <h2>Daily Routine in English</h2>
+  <div style="display:inline-flex;align-items:center;gap:7px;background:#000;border:1px solid rgba(29,185,84,.25);border-radius:30px;padding:5px 14px;font-size:11px;color:var(--green);font-family:'Nunito',sans-serif;font-weight:700;letter-spacing:.06em;margin-bottom:10px;">🎬 Real Video · YouTube</div>
+  <div class="yt">
+    <iframe src="https://www.youtube.com/embed/bq6GBbh3uhU?rel=0&modestbranding=1&cc_load_policy=1" title="Daily Routine in English" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+  <div class="card">
+    <h3>📝 Write while you watch:</h3>
+    <textarea class="ta" placeholder="She wakes up at…&#10;She eats…&#10;Before leaving, she…" rows="4"></textarea>
+  </div>
+  <div class="spk mt12">
+    <div class="spk-hd">After the Video — Speak Now</div>
+    <p>Tell your teacher 3 things she does every day. Use <em>she</em>:</p>
+    <div class="starter"><strong>She wakes up at ___.</strong></div>
+    <div class="starter"><strong>She eats ___ for breakfast.</strong></div>
+    <div class="starter"><strong>Before she leaves, she ___.</strong></div>
+  </div>
+  <div class="nav-row"><button class="nav-back" onclick="goBack()">← Back</button><button class="btn bgo" onclick="goTo(13)">Check Understanding →</button></div>
+</div>
+
+<!-- ▓▓▓▓▓ S13: POST-VIDEO Q1 ▓▓▓▓▓ -->
+<div class="screen" id="s13">
+  <div class="clabel"><span class="cdot"></span>Comprehension · Screen 13</div>
+  <h2>What Did You Understand?</h2>
+  <div class="card mt12">
+    <h3>1. What does she eat for breakfast?</h3>
+    <div class="mcq" id="pv1">
+      <div class="mop" onclick="chkMCQ(this,'pv1','A','C','pv1-fb')"><span class="oky">A</span>Eggs and bacon — a typical American breakfast</div>
+      <div class="mop" onclick="chkMCQ(this,'pv1','B','C','pv1-fb')"><span class="oky">B</span>She skips breakfast — no time!</div>
+      <div class="mop" onclick="chkMCQ(this,'pv1','C','C','pv1-fb')"><span class="oky">C</span>Fruits and vegetables — she likes healthy food</div>
+    </div>
+    <div class="fb" id="pv1-fb"></div>
+  </div>
+  <div class="card mt12">
+    <h3>2. What does she do before she leaves the house?</h3>
+    <div class="mcq" id="pv2">
+      <div class="mop" onclick="chkMCQ(this,'pv2','A','A','pv2-fb')"><span class="oky">A</span>She makes her bed — she likes a clean room</div>
+      <div class="mop" onclick="chkMCQ(this,'pv2','B','A','pv2-fb')"><span class="oky">B</span>She exercises and goes for a run</div>
+      <div class="mop" onclick="chkMCQ(this,'pv2','C','A','pv2-fb')"><span class="oky">C</span>She watches TV for a few minutes</div>
+    </div>
+    <div class="fb" id="pv2-fb"></div>
+  </div>
+  <div class="card mt12">
+    <h3>3. How does she commute to work?</h3>
+    <div class="mcq" id="pv3">
+      <div class="mop" onclick="chkMCQ(this,'pv3','A','B','pv3-fb')"><span class="oky">A</span>She drives her car</div>
+      <div class="mop" onclick="chkMCQ(this,'pv3','B','B','pv3-fb')"><span class="oky">B</span>She takes the subway</div>
+      <div class="mop" onclick="chkMCQ(this,'pv3','C','B','pv3-fb')"><span class="oky">C</span>She walks to work</div>
+    </div>
+    <div class="fb" id="pv3-fb"></div>
+  </div>
+  <div class="nav-row"><button class="nav-back" onclick="goBack()">← Back</button><button class="btn bgo" onclick="goTo(14)">Read the Transcript →</button></div>
+</div>
+
+<!-- ▓▓▓▓▓ S14: TRANSCRIPT PART 1 ▓▓▓▓▓ -->
+<div class="screen" id="s14">
+  <div class="clabel"><span class="cdot"></span>Transcript · Part 1 · Screen 14</div>
+  <h2>Key Moments from the Video</h2>
+  <p class="muted mt6" style="margin-bottom:14px;">Tap the <span style="color:var(--ylo);border-bottom:1px dotted var(--ylo);">yellow words</span> to see grammar explanations.</p>
+  <div class="trblk">
+    <span class="trtime">⏱ 0:05</span>
+    "I normally start my morning around 8am and I <span class="gw" onclick="showG('g1')">wake up</span> to the sound of my alarm clock. I'm not a morning person, so sometimes I will <span class="gw" onclick="showG('g2')">hit snooze</span>."
+  </div>
+  <div class="gtip" id="g1"><strong>wake up</strong> — With <strong>I</strong>, use the BASE form: <em>I wake up.</em><br>With <strong>She / He</strong>, add <strong>-S</strong>: <em>She <strong>wakes</strong> up.</em> ⭐ This is the Simple Present rule!</div>
+  <div class="gtip" id="g2"><strong>hit snooze</strong> — With I: <em>I hit snooze.</em> | With She: <em>She <strong>hits</strong> snooze.</em><br>Notice: hit → hit<strong>s</strong> — She always gets the -S!</div>
+
+  <div class="trblk">
+    <span class="trtime">⏱ 1:20</span>
+    "After I wake up, I <span class="gw" onclick="showG('g3')">get out of bed</span> and stretch. Then I <span class="gw" onclick="showG('g4')">head straight to the bathroom</span> to wash my face and brush my teeth."
+  </div>
+  <div class="gtip" id="g3"><strong>get out of bed</strong> → She <strong>gets</strong> out of bed (+S with She!)<br>This is a phrasal verb: get + out + of + bed. Very common in daily life!</div>
+  <div class="gtip" id="g4"><strong>head straight to</strong> = go directly, without stopping.<br>She <strong>heads</strong> straight to the bathroom. (heads = head + S)</div>
+
+  <div class="spk mt12">
+    <div class="spk-hd">Speak Now — Recreate</div>
+    <p>Can you say these sentences with <em>she</em> instead of <em>I</em>?</p>
+    <div class="starter"><strong>She wakes up at 8am.</strong></div>
+    <div class="starter"><strong>She gets out of bed and stretches.</strong></div>
+    <div class="starter"><strong>She heads straight to the bathroom.</strong></div>
+  </div>
+  <div class="nav-row"><button class="nav-back" onclick="goBack()">← Back</button><button class="btn bgo" onclick="goTo(15)">Transcript Part 2 →</button></div>
+</div>
+
+<!-- ▓▓▓▓▓ S15: TRANSCRIPT PART 2 ▓▓▓▓▓ -->
+<div class="screen" id="s15">
+  <div class="clabel"><span class="cdot"></span>Transcript · Part 2 · Screen 15</div>
+  <h2>Transcript — Continued</h2>
+  <p class="muted mt6" style="margin-bottom:14px;">Continue tapping the <span style="color:var(--ylo);border-bottom:1px dotted var(--ylo);">yellow words</span> for grammar notes.</p>
+
+  <div class="trblk">
+    <span class="trtime">⏱ 2:40</span>
+    "Now it's time to <span class="gw" onclick="showG('g5')">make breakfast</span>. I normally <span class="gw" onclick="showG('g6')">don't like</span> to eat a typical American breakfast. I like eating fruits and veggies or something from different cultures."
+  </div>
+  <div class="gtip" id="g5"><strong>make breakfast</strong> — I make | She <strong>makes</strong> (+S).<br>⚠ We say MAKE breakfast, not ~~cook breakfast~~.</div>
+  <div class="gtip" id="g6"><strong>don't like</strong> — Negative with I: <em>I <strong>don't</strong> like…</em><br>Negative with She: <em>She <strong>doesn't</strong> like…</em><br>⭐ After doesn't — verb stays BASE form, no extra S!</div>
+
+  <div class="trblk">
+    <span class="trtime">⏱ 3:55</span>
+    "After eating, I <span class="gw" onclick="showG('g7')">make the bed</span>. I like starting the day with a clean room. Then I <span class="gw" onclick="showG('g8')">head out</span> the door and <span class="gw" onclick="showG('g9')">commute</span> to work. It takes about 15 minutes."
+  </div>
+  <div class="gtip" id="g7"><strong>make the bed</strong> = arrange your sheets and pillows so the bed looks neat.<br>She <strong>makes</strong> the bed every morning. (makes = make + S)</div>
+  <div class="gtip" id="g8"><strong>head out</strong> = leave. Informal and very natural in spoken English.<br>I head out. → She <strong>heads</strong> out. (heads = head + S)</div>
+  <div class="gtip" id="g9"><strong>commute</strong> — as verb: She <strong>commutes</strong> by subway.<br>As noun: "Her <strong>commute</strong> takes 15 minutes."</div>
+
+  <div class="spk mt12">
+    <div class="spk-hd">Speak Now — Full Routine</div>
+    <p>From memory — describe her whole routine using <em>she + verb+S</em>. Start here:</p>
+    <div class="starter"><strong>First, she wakes up at 8am. Then she…</strong></div>
+  </div>
+  <div class="nav-row"><button class="nav-back" onclick="goBack()">← Back</button><button class="btn bgo" onclick="goTo(16)">Discover the Grammar →</button></div>
+</div>
+
+<!-- ▓▓▓▓▓ S16: GRAMMAR DISCOVERY ▓▓▓▓▓ -->
+<div class="screen" id="s16">
+  <div class="clabel"><span class="cdot"></span>Grammar Discovery · Screen 16</div>
+  <h2>What Do You Notice?</h2>
+  <p class="mt6">Look at these sentences. <strong>Don't read any rule yet.</strong> Just look at the verbs.</p>
+  <div class="card cd mt12">
+    <p style="font-size:16px;line-height:2.6;">
+      She <strong style="color:var(--green);">wakes</strong> up at 8am.<br>
+      She <strong style="color:var(--green);">hits</strong> snooze sometimes.<br>
+      She <strong style="color:var(--green);">makes</strong> breakfast every morning.<br>
+      She <strong style="color:var(--green);">heads</strong> out at 8:45.<br>
+      She <strong style="color:var(--green);">commutes</strong> to work.
+    </p>
+  </div>
+  <div class="card mt12">
+    <h3>❓ What is the same in all the green verbs?</h3>
+    <div class="mcq" id="disc">
+      <div class="mop" onclick="chkMCQ(this,'disc','A','C','disc-fb')"><span class="oky">A</span>They are all in the past tense.</div>
+      <div class="mop" onclick="chkMCQ(this,'disc','B','C','disc-fb')"><span class="oky">B</span>They all use <em>is</em> before the verb.</div>
+      <div class="mop" onclick="chkMCQ(this,'disc','C','C','disc-fb')"><span class="oky">C</span>They all end in <strong>-S</strong> because the subject is <em>She</em>. ⭐</div>
+    </div>
+    <div class="fb" id="disc-fb"></div>
+  </div>
+  <div class="spk mt12" id="disc-spk" style="display:none;">
+    <div class="spk-hd">Speak Now — Explain It</div>
+    <p>Before your teacher explains — try to say the rule out loud. <em>Why does she add -S?</em></p>
+    <div class="starter"><strong>I think the rule is: when the subject is She / He / It, you ___.</strong></div>
+  </div>
+
+  <div class="skip-wrap"><button class="skip-btn" onclick="document.getElementById('disc-spk').style.display='flex'; document.getElementById('disc-nav').style.display='flex';">Skip exercise</button></div>
+  <div class="nav-row" id="disc-nav" style="display:none;"><button class="nav-back" onclick="goBack()">← Back</button><button class="btn bgo" onclick="goTo(17)">See the Full Rule →</button></div>
+</div>
+
+<!-- ▓▓▓▓▓ S17: GRAMMAR RULE ▓▓▓▓▓ -->
+<div class="screen" id="s17">
+  <div class="clabel"><span class="cdot"></span>Grammar Rule · Screen 17</div>
+  <h2>Simple Present — The Rule</h2>
+  <div class="card cg mt12">
+    <table class="gtbl">
+      <tr><th>Subject</th><th>Verb form</th><th>Example</th></tr>
+      <tr><td>I</td><td>base verb</td><td>I <span class="gh">wake</span> up at 8.</td></tr>
+      <tr><td>You / We / They</td><td>base verb</td><td>They <span class="gh">commute</span> by bus.</td></tr>
+      <tr style="background:rgba(29,185,84,.04)"><td><strong>He / She / It ⭐</strong></td><td><strong>verb + S</strong></td><td>She <span class="gh">wakes</span> up at 8.</td></tr>
+    </table>
+    <p style="font-size:12px;color:var(--gr);margin-top:10px;">⭐ Only He / She / It gets the -S. Always. No exceptions (except: have → has, go → goes, do → does)</p>
+  </div>
+  <div class="card mt12">
+    <h3>Negatives: don't vs doesn't</h3>
+    <table class="gtbl">
+      <tr><th>Subject</th><th>Negative</th><th>Example</th></tr>
+      <tr><td>I / You / We / They</td><td class="gh">don't + verb</td><td>I <span class="gh">don't</span> eat meat.</td></tr>
+      <tr><td>He / She / It</td><td class="gh">doesn't + verb</td><td>She <span class="gh">doesn't</span> eat meat.</td></tr>
+    </table>
+    <p style="font-size:12px;color:var(--gr);margin-top:10px;">⭐ After <em>doesn't</em>, the verb goes back to BASE form — no extra S!</p>
+  </div>
+  <div class="card mt12">
+    <h3>Spelling rules for verb + S:</h3>
+    <table class="gtbl">
+      <tr><th>Ends in…</th><th>Rule</th><th>Example</th></tr>
+      <tr><td>Most verbs</td><td>+ s</td><td>wake<span class="gh">s</span> · make<span class="gh">s</span> · like<span class="gh">s</span></td></tr>
+      <tr><td>-ch / -sh / -o / -x</td><td>+ es</td><td>watch<span class="gh">es</span> · go<span class="gh">es</span></td></tr>
+      <tr><td>consonant + y</td><td>y → ies</td><td>studi<span class="gh">es</span> · carri<span class="gh">es</span></td></tr>
+      <tr><td>have (irregular)</td><td>→ has</td><td>She <span class="gh">has</span> breakfast.</td></tr>
+    </table>
+  </div>
+  <div class="spk mt12">
+    <div class="spk-hd">Speak — 60 Second Challenge</div>
+    <p>Look at the grammar table. Say 6 sentences about Sarah using <em>she + verb+S</em>. Timer: 60 seconds!</p>
+    <div class="starter"><strong>She wakes up… She hits… She makes… She heads… She commutes… She doesn't…</strong></div>
+  </div>
+  <div class="nav-row"><button class="nav-back" onclick="goBack()">← Back</button><button class="btn bgo" onclick="goTo(18)">Practice →</button></div>
+</div>
+
+<!-- ▓▓▓▓▓ S18: PRACTICE 1 — FILL BLANK ▓▓▓▓▓ -->
+<div class="screen" id="s18">
+  <div class="clabel"><span class="cdot"></span>Practice 1 · Screen 18</div>
+  <h2>Complete the Sentences</h2>
+  <p class="mt6">Type the correct form of the verb. Check after each one.</p>
+  <div class="card mt12">
+    <div style="margin-bottom:16px;">
+      <p class="muted" style="margin-bottom:6px;font-size:12px;">Subject: <strong>She</strong></p>
+      <div class="blline">She <input class="blinput" id="p1a" placeholder="wake"> up at 8am.</div>
+      <button class="btn bck" style="font-size:11px;padding:7px 16px;" onclick="chkBlank('p1a','wakes','p1af','She <b>wakes</b> up. ✓ She = verb+S!')">Check →</button>
+      <div class="fb" id="p1af"></div>
+    </div>
+    <div class="div"></div>
+    <div style="margin:14px 0 16px;">
+      <p class="muted" style="margin-bottom:6px;font-size:12px;">Subject: <strong>I</strong></p>
+      <div class="blline">I <input class="blinput" id="p1b" placeholder="make"> breakfast at home.</div>
+      <button class="btn bck" style="font-size:11px;padding:7px 16px;" onclick="chkBlank('p1b','make','p1bf','I <b>make</b> breakfast. ✓ With I, the verb stays base form.')">Check →</button>
+      <div class="fb" id="p1bf"></div>
+    </div>
+    <div class="div"></div>
+    <div style="margin-top:14px;">
+      <p class="muted" style="margin-bottom:6px;font-size:12px;">Subject: <strong>She</strong></p>
+      <div class="blline">She <input class="blinput" id="p1c" placeholder="go"> to work by subway.</div>
+      <button class="btn bck" style="font-size:11px;padding:7px 16px;" onclick="chkBlank('p1c','goes','p1cf','She <b>goes</b> to work. ✓ go → goes (ends in -o, so +es!)')">Check →</button>
+      <div class="fb" id="p1cf"></div>
+    </div>
+  </div>
+  <div class="nav-row"><button class="nav-back" onclick="goBack()">← Back</button><button class="btn bgo" onclick="goTo(19)">More Practice →</button></div>
+</div>
+
+<!-- ▓▓▓▓▓ S19: PRACTICE 2 — NEGATIVES ▓▓▓▓▓ -->
+<div class="screen" id="s19">
+  <div class="clabel"><span class="cdot"></span>Practice 2 · Screen 19</div>
+  <h2>Don't or Doesn't?</h2>
+  <p class="mt6">Fill in with <em>don't</em> or <em>doesn't</em>. Think about the subject!</p>
+  <div class="card mt12">
+    <div style="margin-bottom:16px;">
+      <div class="blline">She <input class="blinput" id="n1" placeholder="?"> eat typical American food.</div>
+      <button class="btn bck" style="font-size:11px;padding:7px 16px;" onclick="chkBlank('n1','doesn\'t','n1f','She <b>doesn\'t</b> eat… ✓ She = doesn\'t')">Check →</button>
+      <div class="fb" id="n1f"></div>
+    </div>
+    <div class="div"></div>
+    <div style="margin:14px 0 16px;">
+      <div class="blline">I <input class="blinput" id="n2" placeholder="?"> like mornings.</div>
+      <button class="btn bck" style="font-size:11px;padding:7px 16px;" onclick="chkBlank('n2','don\'t','n2f','I <b>don\'t</b> like… ✓ I = don\'t')">Check →</button>
+      <div class="fb" id="n2f"></div>
+    </div>
+    <div class="div"></div>
+    <div style="margin-top:14px;">
+      <div class="blline">They <input class="blinput" id="n3" placeholder="?"> commute by car.</div>
+      <button class="btn bck" style="font-size:11px;padding:7px 16px;" onclick="chkBlank('n3','don\'t','n3f','They <b>don\'t</b> commute… ✓ They = don\'t')">Check →</button>
+      <div class="fb" id="n3f"></div>
+    </div>
+  </div>
+  <div class="spk mt12">
+    <div class="spk-hd">Speak Now</div>
+    <p>Make 3 true sentences about yourself using <em>I don't…</em></p>
+    <div class="starter"><strong>I don't wake up before 7am.</strong></div>
+    <div class="starter"><strong>I don't eat ___ for breakfast.</strong></div>
+    <div class="starter"><strong>I don't commute by ___.</strong></div>
+  </div>
+  <div class="nav-row"><button class="nav-back" onclick="goBack()">← Back</button><button class="btn bgo" onclick="goTo(20)">Error Correction →</button></div>
+</div>
+
+<!-- ▓▓▓▓▓ S20: PRACTICE 3 — ERROR CORRECTION ▓▓▓▓▓ -->
+<div class="screen" id="s20">
+  <div class="clabel"><span class="cdot"></span>Practice 3 · Screen 20</div>
+  <h2>Spot the Mistake</h2>
+  <p class="mt6">Each sentence has ONE mistake. Find it and choose the correct version.</p>
+  <div class="card mt12">
+    <p class="muted" style="font-size:13px;margin-bottom:8px;">❌ "She make breakfast every morning."</p>
+    <div class="mcq" id="ec1">
+      <div class="mop" onclick="chkMCQ(this,'ec1','A','A','ec1-fb')"><span class="oky">A</span>She <strong>makes</strong> breakfast every morning. ✓</div>
+      <div class="mop" onclick="chkMCQ(this,'ec1','B','A','ec1-fb')"><span class="oky">B</span>She is make breakfast every morning.</div>
+      <div class="mop" onclick="chkMCQ(this,'ec1','C','A','ec1-fb')"><span class="oky">C</span>She making breakfast every morning.</div>
+    </div>
+    <div class="fb" id="ec1-fb"></div>
+  </div>
+  <div class="card mt12">
+    <p class="muted" style="font-size:13px;margin-bottom:8px;">❌ "She doesn't eats meat."</p>
+    <div class="mcq" id="ec2">
+      <div class="mop" onclick="chkMCQ(this,'ec2','A','B','ec2-fb')"><span class="oky">A</span>She doesn't eating meat.</div>
+      <div class="mop" onclick="chkMCQ(this,'ec2','B','B','ec2-fb')"><span class="oky">B</span>She <strong>doesn't eat</strong> meat. ✓</div>
+      <div class="mop" onclick="chkMCQ(this,'ec2','C','B','ec2-fb')"><span class="oky">C</span>She don't eat meat.</div>
+    </div>
+    <div class="fb" id="ec2-fb"></div>
+  </div>
+  <div class="spk mt12">
+    <div class="spk-hd">Speak — Explain</div>
+    <p>Explain to your teacher WHY those sentences were wrong. Use these starters:</p>
+    <div class="starter"><strong>The mistake is ___ because when the subject is She, we need ___.</strong></div>
+    <div class="starter"><strong>After "doesn't", the verb stays ___ — no extra S!</strong></div>
+  </div>
+  <div class="nav-row"><button class="nav-back" onclick="goBack()">← Back</button><button class="btn bgo" onclick="goTo(21)">Drag & Drop Activity →</button></div>
+</div>
+
+<!-- ▓▓▓▓▓ S21: DRAG & DROP ▓▓▓▓▓ -->
+<div class="screen" id="s21">
+  <div class="clabel"><span class="cdot"></span>Drag & Drop · Screen 21</div>
+  <h2>Build the Routine</h2>
+  <p class="mt6">Drag each word from the bank to the correct blank. Complete the sentences from the video.</p>
+  <div class="card mt12">
+    <p class="muted" style="margin-bottom:10px;font-size:12px;">WORD BANK — drag these words:</p>
+    <div class="ddbank" id="ddbank"
+      ondragover="event.preventDefault();this.classList.add('dov')"
+      ondragleave="this.classList.remove('dov')"
+      ondrop="retChip(event)">
+      <div class="chip" id="ch-snooze"    draggable="true" ondragstart="dSt(event,'snooze')"    ondragend="dEn(event)">💤 hits snooze</div>
+      <div class="chip" id="ch-breakfast" draggable="true" ondragstart="dSt(event,'breakfast')" ondragend="dEn(event)">🍳 makes breakfast</div>
+      <div class="chip" id="ch-makebed"   draggable="true" ondragstart="dSt(event,'makebed')"   ondragend="dEn(event)">🛏 makes the bed</div>
+      <div class="chip" id="ch-headout"   draggable="true" ondragstart="dSt(event,'headout')"   ondragend="dEn(event)">🚪 heads out</div>
+      <div class="chip" id="ch-commute"   draggable="true" ondragstart="dSt(event,'commute')"   ondragend="dEn(event)">🚇 commutes</div>
+    </div>
+    <div class="ddrow">
+      <span>She wakes up late and sometimes</span>
+      <div class="ddslot" id="sl1" data-ans="snooze" ondragover="dOv(event)" ondragleave="dLv(event)" ondrop="dDp(event,'sl1')">drop here</div>
+      <span>to sleep more.</span>
+    </div>
+    <div class="ddrow">
+      <span>She goes to the bathroom. Then she</span>
+      <div class="ddslot" id="sl2" data-ans="breakfast" ondragover="dOv(event)" ondragleave="dLv(event)" ondrop="dDp(event,'sl2')">drop here</div>
+      <span>with fruits.</span>
+    </div>
+    <div class="ddrow">
+      <span>After eating, she</span>
+      <div class="ddslot" id="sl3" data-ans="makebed" ondragover="dOv(event)" ondragleave="dLv(event)" ondrop="dDp(event,'sl3')">drop here</div>
+      <span>for a clean room.</span>
+    </div>
+    <div class="ddrow">
+      <span>Finally she</span>
+      <div class="ddslot" id="sl4" data-ans="headout" ondragover="dOv(event)" ondragleave="dLv(event)" ondrop="dDp(event,'sl4')">drop here</div>
+      <span>the door and</span>
+      <div class="ddslot" id="sl5" data-ans="commute" ondragover="dOv(event)" ondragleave="dLv(event)" ondrop="dDp(event,'sl5')">drop here</div>
+      <span>to work.</span>
+    </div>
+    <button class="btn bck mt12" onclick="chkDD()">Check Answers ✓</button>
+    <div class="fb" id="dd-fb"></div>
+  </div>
+  <div class="spk mt12" id="dd-spk" style="display:none;">
+    <div class="spk-hd">Speak Now</div>
+    <p>Read all the sentences out loud using <em>she + verb+S</em>. Then swap: say the same sentences with <em>I</em>!</p>
+  </div>
+
+  <div class="skip-wrap"><button class="skip-btn" onclick="document.getElementById('dd-spk').style.display='flex'; document.getElementById('dd-nav').style.display='flex';">Skip exercise</button></div>
+  <div class="nav-row" id="dd-nav" style="display:none;"><button class="nav-back" onclick="goBack()">← Back</button><button class="btn bgo" onclick="goTo(22)">Ordering Activity →</button></div>
+</div>
+
+<!-- ▓▓▓▓▓ S22: ORDERING — DRAG TO REORDER ▓▓▓▓▓ -->
+<div class="screen" id="s22">
+  <div class="clabel"><span class="cdot"></span>Ordering · Screen 22</div>
+  <h2>Order Sarah's Morning</h2>
+  <p class="mt6">These steps are in the <strong>wrong order</strong>. <strong>Drag the cards</strong> to put them in the correct sequence, then check.</p>
+  <p class="muted" style="margin-top:6px;font-size:12px;">☝ Hold and drag each card up or down to reorder it.</p>
+
+  <div class="ord-list mt12" id="ord-list">
+    <div class="ord-item" draggable="true" data-v="5" ondragstart="ordDragStart(event,this)" ondragover="ordDragOver(event,this)" ondragleave="ordDragLeave(event,this)" ondrop="ordDrop(event,this)" ondragend="ordDragEnd(event)">
+      <div class="ord-handle">⠿</div>
+      <div class="ord-num">1</div>
+      <span>She commutes to work by subway 🚇</span>
+    </div>
+    <div class="ord-item" draggable="true" data-v="1" ondragstart="ordDragStart(event,this)" ondragover="ordDragOver(event,this)" ondragleave="ordDragLeave(event,this)" ondrop="ordDrop(event,this)" ondragend="ordDragEnd(event)">
+      <div class="ord-handle">⠿</div>
+      <div class="ord-num">2</div>
+      <span>She wakes up at 8am ⏰</span>
+    </div>
+    <div class="ord-item" draggable="true" data-v="4" ondragstart="ordDragStart(event,this)" ondragover="ordDragOver(event,this)" ondragleave="ordDragLeave(event,this)" ondrop="ordDrop(event,this)" ondragend="ordDragEnd(event)">
+      <div class="ord-handle">⠿</div>
+      <div class="ord-num">3</div>
+      <span>She heads out the door 🚪</span>
+    </div>
+    <div class="ord-item" draggable="true" data-v="2" ondragstart="ordDragStart(event,this)" ondragover="ordDragOver(event,this)" ondragleave="ordDragLeave(event,this)" ondrop="ordDrop(event,this)" ondragend="ordDragEnd(event)">
+      <div class="ord-handle">⠿</div>
+      <div class="ord-num">4</div>
+      <span>She goes to the bathroom 🚿</span>
+    </div>
+    <div class="ord-item" draggable="true" data-v="3" ondragstart="ordDragStart(event,this)" ondragover="ordDragOver(event,this)" ondragleave="ordDragLeave(event,this)" ondrop="ordDrop(event,this)" ondragend="ordDragEnd(event)">
+      <div class="ord-handle">⠿</div>
+      <div class="ord-num">5</div>
+      <span>She makes breakfast and makes the bed 🍳🛏</span>
+    </div>
+  </div>
+
+  <button class="btn bck mt12" onclick="chkOrder()">Check Order ✓</button>
+  <div class="fb" id="ord-fb"></div>
+
+  <div class="spk mt12" id="ord-spk" style="display:none;">
+    <div class="spk-hd">Speak Now — Sequence</div>
+    <p>Describe Sarah's morning in order using: <em>First… Then… After that… Next… Finally…</em></p>
+    <div class="starter"><strong>First, she wakes up at 8am. Then, she goes to…</strong></div>
+  </div>
+
+  <div class="skip-wrap"><button class="skip-btn" onclick="document.getElementById('ord-spk').style.display='flex'; document.getElementById('ord-nav').style.display='flex';">Skip exercise</button></div>
+  <div class="nav-row" id="ord-nav" style="display:none;"><button class="nav-back" onclick="goBack()">← Back</button><button class="btn bgo" onclick="goTo(23)">Read the Conversation →</button></div>
+</div>
+
+<!-- ▓▓▓▓▓ S23: CONVERSATION READ ▓▓▓▓▓ -->
+<div class="screen" id="s23">
+  <div class="clabel"><span class="cdot"></span>Conversation · Screen 23</div>
+  <h2>A Real Conversation</h2>
+  <p class="mt6">Read this dialogue. Notice how daily routine language is used in a real conversation.</p>
+  <div class="convo mt12">
+    <div class="msg"><div class="mav">🧑</div><div class="mbub">Hey! What time do you usually <strong>wake up</strong>?</div></div>
+    <div class="msg r"><div class="mav">👩</div><div class="mbub">I <strong>wake up</strong> at 8am. But I always <strong>hit snooze</strong> first! 😅 I need at least 10 more minutes.</div></div>
+    <div class="msg"><div class="mav">🧑</div><div class="mbub">Ha! Me too. Do you eat breakfast before work?</div></div>
+    <div class="msg r"><div class="mav">👩</div><div class="mbub">Yes! I <strong>make breakfast</strong> every morning. I <strong>don't like</strong> fast food. I prefer fruits and eggs. It only takes 10 minutes.</div></div>
+    <div class="msg"><div class="mav">🧑</div><div class="mbub">That sounds healthy! What time do you <strong>head out</strong>?</div></div>
+    <div class="msg r"><div class="mav">👩</div><div class="mbub">Around 8:45. Before I leave, I always <strong>make the bed</strong>. I need a clean room when I come home!</div></div>
+    <div class="msg"><div class="mav">🧑</div><div class="mbub">Nice! How do you get to work? Do you drive?</div></div>
+    <div class="msg r"><div class="mav">👩</div><div class="mbub">No, I <strong>commute</strong> by subway. My commute takes about 15 minutes. I listen to music on the way!</div></div>
+  </div>
+  <div class="spk mt12">
+    <div class="spk-hd">Speak Now — Read Aloud</div>
+    <p>Read the conversation with your teacher. Teacher = 🧑, Student = 👩. Then swap roles!</p>
+  </div>
+  <div class="nav-row"><button class="nav-back" onclick="goBack()">← Back</button><button class="btn bgo" onclick="goTo(24)">Comprehension Check →</button></div>
+</div>
+
+<!-- ▓▓▓▓▓ S24: CONVERSATION COMPREHENSION ▓▓▓▓▓ -->
+<div class="screen" id="s24">
+  <div class="clabel"><span class="cdot"></span>Conversation Check · Screen 24</div>
+  <h2>Check Your Understanding</h2>
+  <div class="card mt12">
+    <h3>1. How many times does she hit snooze?</h3>
+    <div class="mcq" id="cv1">
+      <div class="mop" onclick="chkMCQ(this,'cv1','A','A','cv1-fb')"><span class="oky">A</span>She hits snooze for at least 10 minutes</div>
+      <div class="mop" onclick="chkMCQ(this,'cv1','B','A','cv1-fb')"><span class="oky">B</span>She never hits snooze</div>
+      <div class="mop" onclick="chkMCQ(this,'cv1','C','A','cv1-fb')"><span class="oky">C</span>She hits snooze once for 5 minutes</div>
+    </div>
+    <div class="fb" id="cv1-fb"></div>
+  </div>
+  <div class="card mt12">
+    <h3>2. Why does she make the bed?</h3>
+    <div class="mcq" id="cv2">
+      <div class="mop" onclick="chkMCQ(this,'cv2','A','C','cv2-fb')"><span class="oky">A</span>Her mother told her to do it</div>
+      <div class="mop" onclick="chkMCQ(this,'cv2','B','C','cv2-fb')"><span class="oky">B</span>She has visitors coming</div>
+      <div class="mop" onclick="chkMCQ(this,'cv2','C','C','cv2-fb')"><span class="oky">C</span>She needs a clean room when she comes home</div>
+    </div>
+    <div class="fb" id="cv2-fb"></div>
+  </div>
+  <div class="card mt12">
+    <h3>3. Complete with true information about YOU:</h3>
+    <textarea class="ta" placeholder="I wake up at ___. I hit snooze ___. I make / don't make breakfast because ___. I commute by ___." rows="4"></textarea>
+  </div>
+  <div class="nav-row"><button class="nav-back" onclick="goBack()">← Back</button><button class="btn bgo" onclick="goTo(25)">Speaking Arena 1 →</button></div>
+</div>
+
+<!-- ▓▓▓▓▓ S25: SPEAKING ARENA 1 — DESCRIBE SARAH ▓▓▓▓▓ -->
+<div class="screen" id="s25">
+  <div class="clabel"><span class="cdot"></span>Speaking Arena 1 · Screen 25</div>
+  <h2>🎤 Describe Sarah</h2>
+  <div class="card cg mt12">
+    <h3 style="font-size:16px;margin-bottom:10px;">Your Challenge:</h3>
+    <p style="font-size:15px;line-height:1.85;">Describe Sarah's <strong>full morning routine</strong> using <em>she + verb+S</em>. Include all 5 vocabulary phrases. Speak for at least <strong>45 seconds</strong>!</p>
+  </div>
+  <div class="card mt12">
+    <div class="tag-row">
+      <span class="tag">She wakes up…</span><span class="tag">She hits snooze…</span>
+      <span class="tag">She makes breakfast…</span><span class="tag">She makes the bed…</span>
+      <span class="tag">She heads out…</span><span class="tag">She commutes…</span>
+    </div>
+    <textarea class="ta" placeholder="Key words to help you speak (not full sentences)…" rows="3"></textarea>
+  </div>
+  <div class="spk mt12">
+    <div class="spk-hd">After You Speak — Follow-Up</div>
+    <p>Your teacher will ask: <em>"Why does she hit snooze? Why does she make her bed? Do you think she is organised?"</em></p>
+    <div class="starter"><strong>I think she hits snooze because ___.</strong></div>
+    <div class="starter"><strong>I think she is / isn't organised because ___.</strong></div>
+  </div>
+  <div class="nav-row"><button class="nav-back" onclick="goBack()">← Back</button><button class="btn bgo" onclick="goTo(26)">Speaking Arena 2 →</button></div>
+</div>
+
+<!-- ▓▓▓▓▓ S26: SPEAKING ARENA 2 — YOURSELF ▓▓▓▓▓ -->
+<div class="screen" id="s26">
+  <div class="clabel"><span class="cdot"></span>Speaking Arena 2 · Screen 26</div>
+  <h2>🎤 Describe Yourself</h2>
+  <div class="card cg mt12">
+    <h3 style="font-size:16px;margin-bottom:10px;">Your Challenge:</h3>
+    <p style="font-size:15px;line-height:1.85;">Now describe <strong>your own</strong> morning routine using <em>I + verb</em>. Use at least 7 sentences. Include at least one negative (<em>I don't…</em>) and one time expression.</p>
+  </div>
+  <div class="card mt12">
+    <div class="tag-row">
+      <span class="tag">Every morning, I…</span><span class="tag">First, I…</span>
+      <span class="tag">Then I…</span><span class="tag">I don't…</span>
+      <span class="tag">Before I leave, I…</span><span class="tag">I commute by…</span>
+    </div>
+    <textarea class="ta" placeholder="Key words for your speaking…" rows="3"></textarea>
+  </div>
+  <div class="spk mt12">
+    <div class="spk-hd">Follow-Up Questions</div>
+    <p>Your teacher will ask:</p>
+    <div class="starter"><em>"Is your morning routine similar to Sarah's? What is the biggest difference?"</em></div>
+    <div class="starter"><strong>Sarah wakes up at 8am. I wake up at ___. The biggest difference is ___.</strong></div>
+  </div>
+  <div class="nav-row"><button class="nav-back" onclick="goBack()">← Back</button><button class="btn bgo" onclick="goTo(27)">Compare & Contrast →</button></div>
+</div>
+
+<!-- ▓▓▓▓▓ S27: COMPARE — YOU VS SARAH ▓▓▓▓▓ -->
+<div class="screen" id="s27">
+  <div class="clabel"><span class="cdot"></span>Compare · Screen 27</div>
+  <h2>You vs Sarah</h2>
+  <p class="mt6">Fill in the table. One sentence about Sarah, one about you.</p>
+  <div class="card mt12">
+    <table class="gtbl">
+      <tr><th>Topic</th><th>Sarah (She…)</th><th>You (I…)</th></tr>
+      <tr>
+        <td>Wake up time</td>
+        <td><input style="background:transparent;border:none;border-bottom:1px solid var(--bdr);color:var(--green);font-size:13px;width:100%;outline:none;padding:2px;" placeholder="She wakes up at…"></td>
+        <td><input style="background:transparent;border:none;border-bottom:1px solid var(--bdr);color:var(--wh);font-size:13px;width:100%;outline:none;padding:2px;" placeholder="I wake up at…"></td>
+      </tr>
+      <tr>
+        <td>Snooze</td>
+        <td><input style="background:transparent;border:none;border-bottom:1px solid var(--bdr);color:var(--green);font-size:13px;width:100%;outline:none;padding:2px;" placeholder="She hits snooze…"></td>
+        <td><input style="background:transparent;border:none;border-bottom:1px solid var(--bdr);color:var(--wh);font-size:13px;width:100%;outline:none;padding:2px;" placeholder="I never / always…"></td>
+      </tr>
+      <tr>
+        <td>Breakfast</td>
+        <td><input style="background:transparent;border:none;border-bottom:1px solid var(--bdr);color:var(--green);font-size:13px;width:100%;outline:none;padding:2px;" placeholder="She makes…"></td>
+        <td><input style="background:transparent;border:none;border-bottom:1px solid var(--bdr);color:var(--wh);font-size:13px;width:100%;outline:none;padding:2px;" placeholder="I eat / I don't…"></td>
+      </tr>
+      <tr>
+        <td>Commute</td>
+        <td><input style="background:transparent;border:none;border-bottom:1px solid var(--bdr);color:var(--green);font-size:13px;width:100%;outline:none;padding:2px;" placeholder="She commutes by…"></td>
+        <td><input style="background:transparent;border:none;border-bottom:1px solid var(--bdr);color:var(--wh);font-size:13px;width:100%;outline:none;padding:2px;" placeholder="I go by…"></td>
+      </tr>
+    </table>
+  </div>
+  <div class="spk mt12">
+    <div class="spk-hd">Speak — Full Comparison</div>
+    <p>Using the table, speak a full comparison:</p>
+    <div class="starter"><strong>Sarah wakes up at 8am. But I wake up at ___.</strong></div>
+    <div class="starter"><strong>She commutes by subway. I go by ___.</strong></div>
+    <div class="starter"><strong>We are similar because we both ___.</strong></div>
+  </div>
+  <div class="nav-row"><button class="nav-back" onclick="goBack()">← Back</button><button class="btn bgo" onclick="goTo(28)">Final Speaking Challenge →</button></div>
+</div>
+
+<!-- ▓▓▓▓▓ S28: SPEAKING ARENA 3 — FINAL ▓▓▓▓▓ -->
+<div class="screen" id="s28">
+  <div class="clabel"><span class="cdot"></span>Speaking Arena 3 · Final · Screen 28</div>
+  <h2>🏆 The Final Challenge</h2>
+  <div class="card cg mt12">
+    <p style="font-size:15.5px;line-height:1.9;">A friend asks you: <em>"What does the woman in the video do every day? And what about you — what's your morning like?"</em><br><br>Speak for at least <strong>90 seconds</strong>. Cover <strong>both</strong>: her routine AND yours. Use all vocabulary from today.</p>
+  </div>
+  <div class="card mt12">
+    <div class="tag-row">
+      <span class="tag">She wakes up / I wake up</span>
+      <span class="tag">She doesn't / I don't</span>
+      <span class="tag">Both of us…</span>
+      <span class="tag">The difference is…</span>
+    </div>
+    <textarea class="ta" placeholder="Plan your speaking — keywords only…" rows="4"></textarea>
+  </div>
+  <div class="card mt12">
+    <h3>Teacher: rate this performance</h3>
+    <div class="stars">
+      <div class="star-btn" onclick="rateStar(this,'A')">⭐⭐⭐<br><span style="font-size:11px;">Used She+S naturally</span></div>
+      <div class="star-btn" onclick="rateStar(this,'B')">⭐⭐<br><span style="font-size:11px;">Needed reminders</span></div>
+      <div class="star-btn" onclick="rateStar(this,'C')">⭐<br><span style="font-size:11px;">Needs more practice</span></div>
+    </div>
+    <div class="fb" id="star-fb"></div>
+  </div>
+
+  <div class="skip-wrap"><button class="skip-btn" onclick="document.getElementById('star-nav').style.display='flex';">Skip exercise</button></div>
+  <div class="nav-row" id="star-nav" style="display:none;"><button class="nav-back" onclick="goBack()">← Back</button><button class="btn bgo" onclick="goTo(29)">Complete Lesson 🎧</button></div>
+</div>
+
+<!-- ▓▓▓▓▓ S29: COMPLETION ▓▓▓▓▓ -->
+<div class="screen" id="s29">
+  <div style="text-align:center;padding:28px 0 24px;">
+    <div class="cbadge">🐺</div>
+    <div class="cscore">100%</div>
+    <div class="clbl">Lesson Complete</div>
+  </div>
+  <div class="card cg">
+    <h3 style="text-align:center;font-size:18px;margin-bottom:16px;">Skills Unlocked Today</h3>
+    <table class="gtbl">
+      <tr><th>Skill</th><th>Status</th></tr>
+      <tr><td>Vocabulary: wake up, hit snooze, make breakfast, head out, commute</td><td style="color:var(--green);">✅</td></tr>
+      <tr><td>Simple Present — I / You / We / They + base verb</td><td style="color:var(--green);">✅</td></tr>
+      <tr><td>Simple Present — He / She / It + verb+S</td><td style="color:var(--green);">✅</td></tr>
+      <tr><td>Negatives: don't / doesn't</td><td style="color:var(--green);">✅</td></tr>
+      <tr><td>Reading: dialogue and transcript</td><td style="color:var(--green);">✅</td></tr>
+      <tr><td>Describe someone else's routine (She…)</td><td style="color:var(--green);">✅</td></tr>
+      <tr><td>Describe your own routine (I…)</td><td style="color:var(--green);">✅</td></tr>
+    </table>
+  </div>
+  <div class="card mt12">
+    <h3>📚 Homework</h3>
+    <p style="line-height:1.85;">Record a <strong>60-second voice note</strong> on your phone describing your morning routine. Use simple present, all 5 vocabulary words, and at least one negative sentence. Send it to your teacher before the next class!</p>
+  </div>
+  <div class="spk mt12">
+    <div class="spk-hd">Final Reflection — Speak Now</div>
+    <p>Say out loud:</p>
+    <div class="starter"><strong>Today I learned ___.</strong></div>
+    <div class="starter"><strong>The most useful word was ___.</strong></div>
+    <div class="starter"><strong>I want to practise more ___.</strong></div>
+  </div>
+  <div class="foot">
+    <div class="foot-brand"><div class="foot-disc">W</div><span class="foot-name">Wolf Labs</span></div>
+    <span class="foot-meta">Main Series · A1 Beginner · Daily Routines · Simple Present · 30 Screens</span>
+  </div>
+</div>
+
+</main>
+
+<!-- ══════════════════════ JAVASCRIPT -->
+<script>
+// ── NAV ────────────────────────────────────────────────
+const TOTAL = 30;
+let cur = 0;
+function goTo(n){
+  document.getElementById('s'+cur).classList.remove('on');
+  cur = n;
+  document.getElementById('s'+cur).classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+  updProg();
+}
+function updProg(){
+  const p = Math.round((cur/(TOTAL-1))*100);
+  document.getElementById('pfill').style.width=p+'%';
+  document.getElementById('nstep').textContent=cur+'/'+(TOTAL-1);
+  if(jumpOpen) buildJumpList(document.getElementById('jump-search').value);
+}
+
+// ── WHITEBOARD ──────────────────────────────────────────
+let wbOpen = false;
+function toggleWB(){
+  wbOpen = !wbOpen;
+  document.getElementById('wbp').classList.toggle('open', wbOpen);
+  document.getElementById('nav-wb').classList.toggle('active-btn', wbOpen);
+}
+let wbModes = {note:'Type notes for the student here…\n\nThe student can see this in real time!',vocab:'📝 VOCABULARY TODAY:\n\n• wake up = stop sleeping\n• hit snooze = delay the alarm\n• make breakfast = prepare morning meal\n• head out = leave home\n• commute = travel to work',error:'❌ ERRORS TO CORRECT:\n\n',hw:'📚 HOMEWORK:\n\nRecord a 60-second voice note about your morning routine. Use all 5 vocabulary words!'};
+function wbMode(m){
+  document.querySelectorAll('.wb-tool').forEach(t=>t.classList.remove('active'));
+  document.getElementById('wbt-'+m).classList.add('active');
+  document.getElementById('wb-text').placeholder = wbModes[m];
+}
+function wbClear(){if(confirm('Clear whiteboard?'))document.getElementById('wb-text').value='';}
+function wbSave(){
+  localStorage.setItem('wlwb',document.getElementById('wb-text').value);
+  const s=document.getElementById('wb-saved');s.style.display='block';setTimeout(()=>s.style.display='none',1800);
+}
+function wbCopy(){navigator.clipboard.writeText(document.getElementById('wb-text').value).catch(()=>{});}
+// load saved
+(()=>{const s=localStorage.getItem('wlwb');if(s)document.getElementById('wb-text').value=s;})();
+
+// ── FULLSCREEN ──────────────────────────────────────────
+function toggleFS(){
+  if(!document.fullscreenElement)document.documentElement.requestFullscreen().catch(()=>{});
+  else document.exitFullscreen().catch(()=>{});
+}
+
+// ── VOCAB SIDEBAR ───────────────────────────────────────
+const vdata = {
+  wakeup:{emoji:'⏰',word:'wake up',pron:'/weɪk ʌp/',mean:'To stop sleeping and open your eyes. To become conscious and start your day.',syn:'get up · rise · stir',ex:'"I wake up at 7am every day." → With She: She wakes up.',vid:'"I normally start my morning around 8am and I wake up to the sound of my alarm clock."',q:'What time do you wake up on weekdays? Is it easy or hard to wake up?',s1:'Every morning, I wake up at ___.', s2:'On weekends, I wake up at ___.'},
+  snooze:{emoji:'💤',word:'hit snooze',pron:'/hɪt snuːz/',mean:'To press the delay button on your alarm clock to get 5–10 more minutes of sleep.',syn:'postpone alarm · sleep in · doze off',ex:'"I hit snooze 3 times this morning!" → She hits snooze.',vid:'"I\'m not a morning person, so sometimes I will hit snooze on my alarm clock."',q:'Do you hit snooze? How many times? Is it a bad habit?',s1:'I hit snooze ___ times every morning.',s2:'I never hit snooze because ___.'},
+  breakfast:{emoji:'🍳',word:'make breakfast',pron:'/meɪk ˈbrekfəst/',mean:'To prepare your morning meal at home. Always use MAKE, not "cook breakfast".',syn:'prepare a meal · cook in the morning',ex:'"She makes breakfast every morning — eggs and fruit."',vid:'"Now it\'s time to make breakfast. I don\'t like typical American food."',q:'Do you make breakfast at home? What do you usually eat?',s1:'I make breakfast every morning. I eat ___.',s2:'I don\'t make breakfast. I usually ___.'},
+  makebed:{emoji:'🛏',word:'make the bed',pron:'/meɪk ðə bɛd/',mean:"To arrange your sheets and pillows neatly after sleeping. To tidy your bed.",syn:'tidy the bed · straighten the sheets',ex:'"She makes the bed every morning because she likes a clean room."',vid:'"After eating, I make the bed. I like starting the day with a clean room."',q:'Do you make your bed every morning? Why or why not?',s1:'I make / don\'t make my bed because ___.',s2:''},
+  headout:{emoji:'🚪',word:'head out',pron:'/hɛd aʊt/',mean:'To leave a place — usually your home. Very natural and informal in spoken English.',syn:'leave · go out · set off · depart',ex:'"I head out at 8:45." → She heads out at 8:45.',vid:'"I head out the door and commute to work."',q:'What time do you head out every morning? Do you feel calm or rushed?',s1:'I head out at ___ every morning.',s2:'Before I head out, I always ___.'},
+  commute:{emoji:'🚇',word:'commute',pron:'/kəˈmjuːt/',mean:'To travel regularly between your home and your work or school — every day.',syn:'travel to work · go to work daily',ex:'"She commutes by subway. Her commute takes 15 minutes."',vid:'"I head out the door and commute to work. It takes about 15 minutes."',q:'How do you commute? How long does it take? Do you enjoy it?',s1:'I commute by ___. My commute takes ___ minutes.',s2:''}
+};
+function openSB(k){
+  const d=vdata[k]; if(!d) return;
+  document.getElementById('vsb-emoji').textContent=d.emoji;
+  document.getElementById('vsb-word').textContent=d.word;
+  document.getElementById('vsb-pron').textContent=d.pron;
+  document.getElementById('vsb-mean').textContent=d.mean;
+  document.getElementById('vsb-syn').textContent=d.syn;
+  document.getElementById('vsb-ex').textContent=d.ex;
+  document.getElementById('vsb-vid').textContent=d.vid;
+  document.getElementById('vsb-q').textContent=d.q;
+  document.getElementById('vsb-s1').textContent=d.s1;
+  const s2el=document.getElementById('vsb-s2');
+  if(d.s2){s2el.textContent=d.s2;s2el.style.display='block';}else{s2el.style.display='none';}
+  document.getElementById('vsb').classList.add('open');
+  document.getElementById('veil').classList.add('on');
+}
+function closeSB(){
+  document.getElementById('vsb').classList.remove('open');
+  document.getElementById('veil').classList.remove('on');
+}
+
+// ── GRAMMAR TIPS ────────────────────────────────────────
+function showG(id){
+  const el=document.getElementById(id);
+  const wasOpen=el.classList.contains('show');
+  document.querySelectorAll('.gtip').forEach(t=>t.classList.remove('show'));
+  if(!wasOpen)el.classList.add('show');
+}
+
+// ── WARM-UP ──────────────────────────────────────────────
+function showWU(){
+  const boxes=document.querySelectorAll('#wuchecks input[type=checkbox]');
+  const count=Array.from(boxes).filter(b=>b.checked).length;
+  const fb=document.getElementById('wu-fb');
+  fb.className='fb info show';
+  if(count<=1)fb.innerHTML="Only "+count+"? You're definitely not a morning person — just like Sarah in the video! 😄";
+  else if(count<=3)fb.innerHTML="You do "+count+" things — a fairly typical morning. Let's compare with the video!";
+  else fb.innerHTML="Wow! "+count+" out of 6 — you have a very organised morning!";
+  document.getElementById('wu-nav').style.display='flex';
+}
+
+// ── MCQ ──────────────────────────────────────────────────
+const mcqFB = {
+  vq1:{ok:"✅ Correct! She <b>wakes</b> up — with She, we always add -S to the verb.",bad:"❌ Remember: when the subject is She/He/It, we add -S to the verb."},
+  pv1:{ok:"✅ Right! She eats fruits and vegetables — she doesn't like typical American food.",bad:"❌ Watch the video again — what does she say about breakfast?"},
+  pv2:{ok:"✅ Correct! She makes her bed because she likes a clean room.",bad:"❌ Think about the end of the video — what does she do before leaving?"},
+  pv3:{ok:"✅ Right! She commutes by subway and it takes about 15 minutes.",bad:"❌ How does she get to work? Watch again from 3:55."},
+  disc:{ok:"✅ Exactly! She/He/It always adds -S to the verb. That's the Simple Present rule!",bad:"❌ Look again at all the verbs. Every single one ends in -S. Why? What is the subject?"},
+  ec1:{ok:"✅ Correct! She <b>makes</b> breakfast — She/He/It = verb+S.",bad:"❌ The subject is She — so the verb needs +S. Which option is correct?"},
+  ec2:{ok:"✅ Perfect! After <b>doesn't</b>, the verb stays BASE form — no extra S ever.",bad:"❌ Remember: doesn't + BASE verb. No S after doesn't!"},
+  cv1:{ok:"✅ Right! She hits snooze for at least 10 more minutes.",bad:"❌ Read her second message in the conversation again."},
+  cv2:{ok:"✅ Correct! She needs a clean room when she comes home.",bad:"❌ Read her 5th message. Why does she make the bed?"}
+};
+function chkMCQ(el,group,choice,correct,fbId){
+  const opts=document.getElementById(group).querySelectorAll('.mop');
+  if(el.classList.contains('lk'))return;
+  opts.forEach(o=>o.classList.add('lk'));
+  const fb=document.getElementById(fbId);
+  if(choice===correct){
+    el.classList.add('ok');
+    fb.className='fb ok show'; fb.innerHTML=mcqFB[group].ok;
+  }else{
+    el.classList.add('no');
+    opts.forEach(o=>{if(o.querySelector('.oky').textContent===correct)o.classList.add('ok');});
+    fb.className='fb bad show'; fb.innerHTML=mcqFB[group].bad;
+  }
+  // unlock discovery nav/speak if needed
+  if(group==='disc'){
+    document.getElementById('disc-spk').style.display='block';
+    document.getElementById('disc-nav').style.display='flex';
+  }
+}
+
+// ── FILL BLANK ───────────────────────────────────────────
+function chkBlank(inputId,expected,fbId,msg){
+  const inp=document.getElementById(inputId);
+  const fb=document.getElementById(fbId);
+  const val=inp.value.trim().toLowerCase();
+  if(!val){fb.className='fb bad show';fb.innerHTML='⚠ Type your answer first!';return;}
+  if(val===expected.toLowerCase()){
+    inp.classList.add('ok');inp.classList.remove('no');
+    fb.className='fb ok show';fb.innerHTML='✅ '+msg;
+  }else{
+    inp.classList.add('no');inp.classList.remove('ok');
+    fb.className='fb bad show';fb.innerHTML='❌ Not quite. The answer is <strong>'+expected+'</strong>. Try to understand why!';
+  }
+}
+
+// ── MATCHING ─────────────────────────────────────────────
+// Left[0]=wakeup→Right[2]=stop sleeping, Left[1]=snooze→Right[0]=press delay
+// Left[2]=breakfast→Right[4]=prepare meal, Left[3]=headout→Right[1]=leave home
+// Left[4]=commute→Right[3]=travel daily
+const matchAns={0:2,1:0,2:4,3:1,4:3};
+let matchSel={side:null,idx:null};
+let matchDone=0;
+function matchClick(side,idx){
+  const el=document.getElementById('m'+side+idx);
+  if(el.classList.contains('mok'))return;
+  if(matchSel.side===null){
+    if(matchSel.idx!==null){const prev=document.getElementById('m'+matchSel.side+matchSel.idx);if(prev)prev.classList.remove('sel');}
+    el.classList.add('sel');matchSel={side,idx};
+  }else{
+    if(matchSel.side===side){
+      document.getElementById('m'+matchSel.side+matchSel.idx).classList.remove('sel');
+      el.classList.add('sel');matchSel={side,idx};return;
+    }
+    const li=matchSel.side==='l'?matchSel.idx:idx;
+    const ri=matchSel.side==='r'?matchSel.idx:idx;
+    const lel=document.getElementById('ml'+li);
+    const rel=document.getElementById('mr'+ri);
+    lel.classList.remove('sel');
+    if(matchAns[li]===ri){
+      lel.classList.add('mok');rel.classList.add('mok');matchDone++;
+      if(matchDone===5){
+        const fb=document.getElementById('match-fb');
+        fb.className='fb ok show';fb.innerHTML='🎉 All 5 matched! Great vocabulary knowledge!';
+        document.getElementById('match-spk').style.display='block';
+        document.getElementById('match-nav').style.display='flex';
+      }
+    }else{
+      lel.classList.add('mno');rel.classList.add('mno');
+      setTimeout(()=>{lel.classList.remove('mno','sel');rel.classList.remove('mno','sel');},900);
+    }
+    matchSel={side:null,idx:null};
+  }
+}
+
+// ── DRAG & DROP ──────────────────────────────────────────
+let dragId=null;
+const slotAns={sl1:'snooze',sl2:'breakfast',sl3:'makebed',sl4:'headout',sl5:'commute'};
+const chipLbl={snooze:'💤 hits snooze',breakfast:'🍳 makes breakfast',makebed:'🛏 makes the bed',headout:'🚪 heads out',commute:'🚇 commutes'};
+function dSt(e,id){dragId=id;e.target.classList.add('dragging');e.dataTransfer.effectAllowed='move';}
+function dEn(e){e.target.classList.remove('dragging');}
+function dOv(e){e.preventDefault();e.currentTarget.classList.add('dov');}
+function dLv(e){e.currentTarget.classList.remove('dov');}
+function dDp(e,sId){
+  e.preventDefault();
+  const sl=document.getElementById(sId);sl.classList.remove('dov');
+  if(!dragId)return;
+  const prev=sl.getAttribute('data-filled');
+  if(prev){const pc=document.getElementById('ch-'+prev);if(pc)pc.classList.remove('gone');}
+  sl.setAttribute('data-filled',dragId);
+  sl.textContent=chipLbl[dragId];sl.style.color='rgba(255,255,255,.9)';
+  const ch=document.getElementById('ch-'+dragId);if(ch)ch.classList.add('gone');
+  dragId=null;
+}
+function retChip(e){e.preventDefault();document.getElementById('ddbank').classList.remove('dov');}
+function chkDD(){
+  let ok=0;
+  for(const[sId,ans]of Object.entries(slotAns)){
+    const sl=document.getElementById(sId);const filled=sl.getAttribute('data-filled');
+    sl.classList.remove('ok','no');
+    if(filled===ans){sl.classList.add('ok');ok++;}else if(filled){sl.classList.add('no');}
+  }
+  const fb=document.getElementById('dd-fb');
+  if(ok===5){
+    fb.className='fb ok show';fb.innerHTML='🎉 Perfect! All 5 correct! You know the routine!';
+    document.getElementById('dd-spk').style.display='block';
+    document.getElementById('dd-nav').style.display='flex';
+  }else{fb.className='fb bad show';fb.innerHTML='❌ '+ok+'/5 correct. Red slots are wrong — try moving those chips!';}
+}
+
+// ── ORDERING — DRAG TO REORDER ───────────────────────────
+let ordAttempts = 0;
+// Correct order by data-v: 1,2,3,4,5
+// 1=wakes up, 2=bathroom, 3=breakfast+bed, 4=heads out, 5=commutes
+const ordCorrectOrder = [
+  'She wakes up at 8am ⏰',
+  'She goes to the bathroom 🚿',
+  'She makes breakfast and makes the bed 🍳🛏',
+  'She heads out the door 🚪',
+  'She commutes to work by subway 🚇'
+];
+let ordDragged = null;
+function ordDragStart(e, el){
+  ordDragged = el;
+  el.classList.add('dragging-ord');
+  e.dataTransfer.effectAllowed = 'move';
+}
+function ordDragEnd(e){
+  document.querySelectorAll('.ord-item').forEach(i=>{
+    i.classList.remove('dragging-ord','drag-over-ord');
+  });
+  ordDragged = null;
+  updOrdNums();
+}
+function ordDragOver(e, el){
+  e.preventDefault();
+  if(el !== ordDragged) el.classList.add('drag-over-ord');
+}
+function ordDragLeave(e, el){ el.classList.remove('drag-over-ord'); }
+function ordDrop(e, el){
+  e.preventDefault();
+  el.classList.remove('drag-over-ord');
+  if(!ordDragged || ordDragged === el) return;
+  const list = document.getElementById('ord-list');
+  const items = Array.from(list.querySelectorAll('.ord-item'));
+  const fromIdx = items.indexOf(ordDragged);
+  const toIdx = items.indexOf(el);
+  if(fromIdx < toIdx) list.insertBefore(ordDragged, el.nextSibling);
+  else list.insertBefore(ordDragged, el);
+  updOrdNums();
+}
+function updOrdNums(){
+  document.getElementById('ord-list').querySelectorAll('.ord-item').forEach((item,i)=>{
+    item.querySelector('.ord-num').textContent = i+1;
+  });
+}
+function chkOrder(){
+  const items = document.getElementById('ord-list').querySelectorAll('.ord-item');
+  const vals = Array.from(items).map(i=>parseInt(i.getAttribute('data-v')));
+  const fb = document.getElementById('ord-fb');
+  if(vals.every((v,i)=>v===i+1)){
+    items.forEach(i=>{i.style.borderColor='var(--green)';i.style.background='rgba(29,185,84,.06)';});
+    fb.className='fb ok show';
+    fb.innerHTML='✅ Perfect! ⏰ Wake up → 🚿 Bathroom → 🍳🛏 Breakfast + Bed → 🚪 Head out → 🚇 Commute';
+    document.getElementById('ord-spk').style.display='block';
+    document.getElementById('ord-nav').style.display='flex';
+  } else {
+    ordAttempts++;
+    if(ordAttempts >= 1){
+      const rows = ordCorrectOrder.map((t,i)=>
+        `<div style="display:flex;align-items:center;gap:9px;font-size:13px;padding:5px 0;">
+          <span style="background:var(--glo);border:1px solid var(--gmd);border-radius:5px;min-width:22px;text-align:center;padding:2px 6px;font-family:'Nunito',sans-serif;font-weight:800;color:var(--green);font-size:11px;">${i+1}</span>
+          <span>${t}</span>
+        </div>`
+      ).join('');
+      fb.className='fb bad show';
+      fb.innerHTML=`❌ Not quite! Here is the correct order:<br>${rows}<div style="margin-top:10px;font-size:12.5px;color:rgba(255,255,255,.5);">💡 Try to put the cards in this order, or press Continue below.</div>`;
+      document.getElementById('ord-spk').style.display='block';
+      document.getElementById('ord-nav').style.display='flex';
+    } else {
+      fb.className='fb bad show';
+      fb.innerHTML='❌ Not quite — think about what she does right after waking up. Try again!';
+    }
+  }
+}
+
+// ── JUMP TO PAGE ──────────────────────────────────────────
+const jumpScreens = [
+  {n:0,  name:'Teacher Guide',          tag:'Setup'},
+  {n:1,  name:'Cover',                  tag:'Intro'},
+  {n:2,  name:'Warm-Up — Checklist',    tag:'Warm-Up'},
+  {n:3,  name:'Warm-Up Speaking',       tag:'Warm-Up'},
+  {n:4,  name:'Meet Sarah — Vocab Context', tag:'Vocabulary'},
+  {n:5,  name:'Word: wake up',          tag:'Vocabulary 1/5'},
+  {n:6,  name:'Word: hit snooze',       tag:'Vocabulary 2/5'},
+  {n:7,  name:'Word: make breakfast',   tag:'Vocabulary 3/5'},
+  {n:8,  name:'Word: head out',         tag:'Vocabulary 4/5'},
+  {n:9,  name:'Word: commute',          tag:'Vocabulary 5/5'},
+  {n:10, name:'Vocabulary Matching',    tag:'Review'},
+  {n:11, name:'Before the Video',       tag:'Video'},
+  {n:12, name:'Watch the Video',        tag:'Video'},
+  {n:13, name:'Post-Video Questions',   tag:'Comprehension'},
+  {n:14, name:'Transcript Part 1',      tag:'Transcript'},
+  {n:15, name:'Transcript Part 2',      tag:'Transcript'},
+  {n:16, name:'Grammar Discovery',      tag:'Grammar'},
+  {n:17, name:'Grammar Rule Table',     tag:'Grammar'},
+  {n:18, name:'Practice 1 — Fill Blank',tag:'Practice'},
+  {n:19, name:'Practice 2 — Negatives', tag:'Practice'},
+  {n:20, name:'Practice 3 — Errors',    tag:'Practice'},
+  {n:21, name:'Drag & Drop',            tag:'Activity'},
+  {n:22, name:'Ordering — Drag to Sort',tag:'Activity'},
+  {n:23, name:'Conversation — Read',    tag:'Speaking'},
+  {n:24, name:'Conversation Check',     tag:'Speaking'},
+  {n:25, name:'Speaking Arena 1',       tag:'Speaking'},
+  {n:26, name:'Speaking Arena 2',       tag:'Speaking'},
+  {n:27, name:'Compare: You vs Sarah',  tag:'Speaking'},
+  {n:28, name:'Final Challenge',        tag:'Speaking'},
+  {n:29, name:'Lesson Complete',        tag:'Wrap-Up'},
+];
+
+let jumpOpen = false;
+
+function buildJumpList(filter=''){
+  const list = document.getElementById('jump-list');
+  const term = filter.toLowerCase();
+  let html = '';
+  let lastTag = '';
+  jumpScreens.forEach(s => {
+    if(term && !s.name.toLowerCase().includes(term) && !s.tag.toLowerCase().includes(term)) return;
+    if(s.tag !== lastTag){
+      html += `<div class="jump-section-sep">${s.tag}</div>`;
+      lastTag = s.tag;
+    }
+    const active = s.n === cur ? 'active-pg' : '';
+    html += `<div class="jump-item ${active}" onclick="jumpTo(${s.n})">
+      <div class="jump-num">${s.n}</div>
+      <div><div class="jump-name">${s.name}</div></div>
+    </div>`;
+  });
+  if(!html) html = '<div style="padding:16px;font-size:13px;color:var(--gr);text-align:center;">No results</div>';
+  list.innerHTML = html;
+}
+
+function jumpTo(n){
+  goTo(n);
+  // force-show all gated navs so teacher can navigate freely
+  ['wu-nav','match-nav','match-spk','disc-nav','disc-spk','dd-nav','dd-spk','ord-nav','ord-spk','star-nav'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.style.display = el.classList.contains('nav-row') ? 'flex' : 'block';
+  });
+  toggleJump();
+}
+
+function toggleJump(){
+  jumpOpen = !jumpOpen;
+  document.getElementById('jump-panel').classList.toggle('open', jumpOpen);
+  document.getElementById('nav-jump').classList.toggle('active-btn', jumpOpen);
+  if(jumpOpen){
+    buildJumpList();
+    setTimeout(()=>document.getElementById('jump-search').focus(), 200);
+  }
+}
+
+function filterJump(val){ buildJumpList(val); }
+
+// close jump panel when clicking outside
+document.addEventListener('click', e=>{
+  if(!jumpOpen) return;
+  const panel = document.getElementById('jump-panel');
+  const btn = document.getElementById('nav-jump');
+  if(!panel.contains(e.target) && !btn.contains(e.target)) toggleJump();
+});
+
+// ── GO BACK ───────────────────────────────────────────────
+function goBack(){
+  if(cur > 0) goTo(cur - 1);
+}
+
+// ── STAR RATING ───────────────────────────────────────────
+const starMsg={
+  A:{cls:'ok',txt:'🏆 Outstanding! The student uses She+S naturally. Assign the homework!'},
+  B:{cls:'info',txt:'👍 Good progress! 1–2 more sessions will make it automatic. Assign homework.'},
+  C:{cls:'bad',txt:'📚 Needs repetition. Redo speaking drills before next lesson. Still assign homework!'}
+};
+function rateStar(el,choice){
+  document.querySelectorAll('.star-btn').forEach(b=>b.className='star-btn');
+  el.classList.add(choice==='A'?'sel-ok':choice==='B'?'sel-warn':'sel-bad');
+  const fb=document.getElementById('star-fb');
+  fb.className='fb '+starMsg[choice].cls+' show';fb.innerHTML=starMsg[choice].txt;
+  document.getElementById('star-nav').style.display='flex';
+}
+
+updProg();
+</script>
+</body>
+</html>
